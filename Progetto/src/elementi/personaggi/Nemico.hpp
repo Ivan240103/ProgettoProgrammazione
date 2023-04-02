@@ -4,16 +4,17 @@
  Il danno causato è casuale tra un valore minimo e massimo
 */
 
-#include <cstring>
+#ifndef NEMICO_HPP
+#define NEMICO_HPP
+
 #include <cstdlib>
 #include <ctime>
-
-#define NOME_NEM 20
+#include "../../util/Stringa.hpp"
 
 class Nemico {
   
   protected:
-    char nome[NOME_NEM];
+    Stringa nome;
     int vita;
     int danno;
     // se è true il nemico può colpire a distanza
@@ -22,33 +23,18 @@ class Nemico {
     int ricompensa;
 
   public:
-    // costruttore
-    Nemico(char nome[], int vita = 10, int minDanno = 1, int maxDanno = 1, bool distanza = false, int ricompensa = 2) {
-      strncpy(this->nome, nome, NOME_NEM);
-      this->vita = vita;
-      srand(time(0));
-      this->danno = rand() % (maxDanno - minDanno + 1) + minDanno;
-      this->distanza = distanza;
-      this->ricompensa = ricompensa;
-    }
+    
+    Nemico(Stringa nome, int vita, int minDanno, int maxDanno, bool distanza, int ricompensa);
 
-    void getNome(char n[]) {
-      strncpy(n, nome, NOME_NEM);
-    }
+    Stringa getNome();
 
-    int getVita() {
-      return vita;
-    }
+    int getVita();
 
-    int getDanno() {
-      return danno;
-    }
+    int getDanno();
 
-    bool isDistanza() {
-      return distanza;
-    }
+    bool isDistanza();
 
-    int getRicompensa() {
-      return ricompensa;
-    }
+    int getRicompensa();
 };
+
+#endif

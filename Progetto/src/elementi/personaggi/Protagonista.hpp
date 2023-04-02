@@ -2,60 +2,38 @@
  Classe che definisce il protagonista controllato dall'utente
 */
 
-#include <cstring>
-#include "../armi/Arma.hpp"
-#include "../armi/Bastone.hpp"
+#ifndef PROTAGONISTA_HPP
+#define PROTAGONISTA_HPP
 
-#define NOME_PROT 30
+#include "../armi/Arma.hpp"
+#include "../armi/Bastone.cpp"
+#include "../../util/Stringa.hpp"
 
 class Protagonista {
   
   protected:
-    char nome[NOME_PROT];
+    Stringa nome;
     int vita;
     int denaro;
-    Arma arma = NULL;
+    Arma arma = Bastone();
   
   public:
-    // costruttore
-    Protagonista(char nome[]) {
-      strncpy(this->nome, nome, NOME_PROT);
-      this->vita = 100;
-      this->denaro = 0;
-      this->arma = Bastone();
-    }
 
-    void getNome(char n[]) {
-      strncpy(n, nome, NOME_PROT);
-    }
+    Protagonista(Stringa nome);
 
-    int getVita() {
-      return vita;
-    }
+    Stringa getNome();
 
-    int getDenaro() {
-      return denaro;
-    }
+    int getVita();
 
-    Arma getArma() {
-      return arma;
-    }
+    int getDenaro();
 
-    void guadagna(int soldi) {
-      denaro += soldi;
-    }
+    Arma getArma();
 
-    // Postcondition: false se il denaro non è sufficiente, true se tutto apposto
-    bool spendi(int soldi) {
-      bool tr = false;
-      if (soldi <= denaro) {
-        denaro -= soldi;
-        tr = true;
-      }
-      return tr;
-    }
+    void guadagna(int soldi);
 
-    void cambiaArma(Arma a) {
-      arma = a;
-    }
+    bool spendi(int soldi);
+
+    void cambiaArma(Arma a);
 };
+
+#endif

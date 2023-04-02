@@ -4,11 +4,15 @@
  Gli oggetti sono sempre acquistabili (inesauribili)
 */
 
-#include "../elementi/armi/Spada.hpp"
-#include "../elementi/armi/PallaChiodata.hpp"
-#include "../elementi/armi/Arco.hpp"
+#ifndef NEGOZIO_HPP
+#define NEGOZIO_HPP
 
-#define NUM_ARMI 3
+#include "../elementi/armi/Arma.hpp"
+#include "../elementi/armi/Spada.cpp"
+#include "../elementi/armi/PallaChiodata.cpp"
+#include "../elementi/armi/Arco.cpp"
+
+const int NUM_ARMI = 3;
 
 class Negozio {
   
@@ -20,11 +24,10 @@ class Negozio {
     };
 
   public:
-    // costruttore
-    Negozio() {}
 
-    // Postcondition: arma dalla posizione scelta
-    Arma vendiArma(int position) {
-      return armi[position];
-    }
+    Negozio();
+
+    Arma vendiArma(int position);
 };
+
+#endif

@@ -4,10 +4,14 @@
 */
 
 #include "Arma.hpp"
+#include "../../util/Stringa.hpp"
 
 class PallaChiodata : public Arma {
   
+  protected:
+    char nome[20] = "Palla Chiodata";
+  
   public:
     // costruttore
-    PallaChiodata() : Arma("Palla Chiodata", 12, 750, false, true) {}
+    PallaChiodata() : Arma(Stringa(nome), 12, 750, false, true) {}
 };

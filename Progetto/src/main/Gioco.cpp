@@ -8,8 +8,11 @@ using namespace std;
 #include "../elementi/personaggi/Protagonista.hpp"
 
 int main() {
-  Protagonista p = Protagonista("Cosimo");
-  Negozio shop = Negozio();
+  char protName[10] = "Cosimo";
+  Protagonista p = Protagonista(protName);
+  
+  cout<<"Nome: "<<p.getNome().s<<endl;
+  cout<<"Danno arma: "<<p.getArma().getDanno()<<endl;
   
   return 0;
 }
