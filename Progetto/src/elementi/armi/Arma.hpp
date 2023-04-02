@@ -2,14 +2,15 @@
  Classe padre per tutte le armi del gioco
 */
 
-#include <cstring>
+#ifndef ARMA_HPP
+#define ARMA_HPP
 
-#define NOME_ARMA 20
+#include "../../util/Stringa.hpp"
 
 class Arma {
   
   protected:
-    char nome[NOME_ARMA];
+    Stringa nome;
     int danno;
     int costo;
     // se è true l'arma può colpire a distanza
@@ -18,32 +19,18 @@ class Arma {
     bool intorno;
 
   public:
-    // costruttore
-    Arma(char nome[], int danno = 5, int costo = 100, bool distanza = false, bool intorno = false) {
-      strncpy(this->nome, nome, NOME_ARMA);
-      this->danno = danno;
-      this->costo = costo;
-      this->distanza = distanza;
-      this->intorno = intorno;
-    }
+    
+    Arma(Stringa nome, int danno, int costo, bool distanza, bool intorno);
 
-    void getNome(char n[]) {
-      strncpy(n, this->nome, NOME_ARMA);
-    }
+    Stringa getNome();
 
-    int getDanno() {
-      return danno;
-    }
+    int getDanno();
 
-    int getCosto() {
-      return costo;
-    }
+    int getCosto();
 
-    bool isDistanza() {
-      return distanza;
-    }
+    bool isDistanza();
 
-    bool isIntorno() {
-      return intorno;
-    }
+    bool isIntorno();
 };
+
+#endif

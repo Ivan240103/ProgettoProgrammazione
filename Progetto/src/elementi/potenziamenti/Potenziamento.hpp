@@ -2,22 +2,20 @@
  Classe padre per tutti i potenziamenti
 */
 
-#include <cstring>
+#ifndef POTENZIAMENTO_HPP
+#define POTENZIAMENTO_HPP
 
-#define NOME_POT 20
+#include "../../util/Stringa.hpp"
 
 class Potenziamento {
   
   protected:
-    char nome[NOME_POT];
+    Stringa nome;
     int costo;
     int durata;
 
   public:
-    // costruttore
-    Potenziamento(char nome[], int costo, int durata) {
-      strncpy(this->nome, nome, NOME_POT);
-      this->costo = costo;
-      this->durata = durata;
-    }  
+    Potenziamento(Stringa nome, int costo, int durata);
 };
+
+#endif
