@@ -19,6 +19,8 @@ class Arma {
     bool intorno;
 
   public:
+
+    Arma();
     
     Arma(Stringa nome, int danno, int costo, bool distanza, bool intorno);
 
@@ -31,6 +33,10 @@ class Arma {
     bool isDistanza();
 
     bool isIntorno();
+
+    Stringa toString();
+
+    Stringa getData();
 };
 
 #endif

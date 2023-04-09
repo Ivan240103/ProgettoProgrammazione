@@ -8,11 +8,69 @@ using namespace std;
 #include "../elementi/personaggi/Protagonista.hpp"
 
 int main() {
-  char protName[10] = "Cosimo";
-  Protagonista p = Protagonista(protName);
-  
-  cout<<"Nome: "<<p.getNome().s<<endl;
-  cout<<"Danno arma: "<<p.getArma().getDanno()<<endl;
-  
+  Protagonista p = Protagonista((char*) "Cosimo");
+  Negozio negozio = Negozio();
+
+  bool ciclo = true, cicloNeg;
+  int scelta, sceltaNeg;
+  Arma acquisto = Arma();
+
+  do {
+    cout<<endl<<"Inserisci il numero corrispondente alla scelta:"<<endl;
+    cout<<"0) Termina esecuzione. 1) Stampa resoconto. 2) Vai al negozio. 3) Guadagna 500 denari."<<endl;
+    cin>>scelta;
+    cout<<endl;
+    switch (scelta) {
+      case 0:
+        cout<<"Partita terminata"<<endl;
+        ciclo = false;
+        break;
+      case 1:
+        cout<<p.toString().s;
+        cout<<p.getData().s;
+        cout<<p.getArma().toString().s;
+        cout<<p.getArma().getData().s;
+        break;
+      case 2:
+        cicloNeg = true;
+        do {
+          cout<<endl<<"Inserire il numero corrispondente alla scelta:"<<endl;
+          cout<<"0) Esci dal negozio. 1) Compra un arma."<<endl;
+          cin>>sceltaNeg;
+          cout<<endl;
+          switch (sceltaNeg) {
+            case 0:
+              cout<<"Grazie di essere passato"<<endl;
+              cicloNeg = false;
+              break;
+            case 1:
+              cout<<"Articoli disponibili"<<endl;
+              cout<<negozio.mostraArticoli().s;
+              cout<<"Inserisci il numero dell'arma da comprare: ";
+              cin>>sceltaNeg;
+              acquisto = negozio.vendiArma(sceltaNeg);
+              if(p.spendi(acquisto.getCosto())) {
+                p.cambiaArma(acquisto);
+                cout<<"Acquisto effettuato. Saldo residuo: "<<p.getDenaro()<<endl;
+              } else {
+                cout<<"Denaro insufficiente"<<endl;
+              }
+              break;
+            default:
+              cout<<"Scelta inesistente"<<endl;
+              break;
+          }
+        } while (cicloNeg);
+        break;
+      case 3:
+        p.guadagna(500);
+        cout<<p.getNome().s<<" ha guadagnato 500 denari. Saldo attuale: "<<p.getDenaro()<<endl;
+        break;
+      default:
+        cout<<"Scelta inesistente"<<endl;
+        break;
+    }
+  } while (ciclo);
+
   return 0;
 }

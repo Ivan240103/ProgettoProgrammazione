@@ -8,10 +8,7 @@
 
 class Guardia : public Nemico {
 
-  protected:
-    char nome[10] = "Guardia";
-  
   public:
     // costruttore
-    Guardia() : Nemico(Stringa(nome), 40, 5, 8, true, 10) {}
+    Guardia() : Nemico(Stringa((char*) "Guardia"), 40, 5, 8, true, 10) {}
 };

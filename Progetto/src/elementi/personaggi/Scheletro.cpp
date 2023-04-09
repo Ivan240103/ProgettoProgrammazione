@@ -8,10 +8,7 @@
 
 class Scheletro : public Nemico {
 
-  protected:
-    char nome[15] = "Scheletro";
-  
   public:
     // costruttore
-    Scheletro() : Nemico(Stringa(nome), 10, 2, 4, false, 3) {}
+    Scheletro() : Nemico(Stringa((char*) "Scheletro"), 10, 2, 4, false, 3) {}
 };

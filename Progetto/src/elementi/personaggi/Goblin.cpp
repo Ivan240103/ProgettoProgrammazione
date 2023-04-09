@@ -8,10 +8,7 @@
 
 class Goblin : public Nemico {
 
-  protected:
-    char nome[10] = "Goblin";
-  
   public:
     // costruttore
-    Goblin() : Nemico(Stringa(nome), 20, 4, 6, false, 5) {}
+    Goblin() : Nemico(Stringa((char*) "Goblin"), 20, 4, 6, false, 5) {}
 };
