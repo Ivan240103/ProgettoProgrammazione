@@ -29,3 +29,37 @@ bool Nemico::isDistanza() {
 int Nemico::getRicompensa() {
   return ricompensa;
 }
+
+Stringa Nemico::toString() {
+  Stringa tr = nome;
+  tr.concat(Stringa((char*) " - Vita: "));
+  tr.concat(vita);
+  tr.concat(Stringa((char*) ", Danno: "));
+  tr.concat(danno);
+  if (distanza) {
+    tr.concat(Stringa((char*) ", Distanza: true, Ricompensa: "));
+  } else {
+    tr.concat(Stringa((char*) ", Distanza: false, Ricompensa: "));
+  }
+  tr.concat(ricompensa);
+  tr.concat('\n');
+  return tr;
+}
+
+Stringa Nemico::getData() {
+  Stringa tr = nome;
+  tr.concat(',');
+  tr.concat(vita);
+  tr.concat(',');
+  tr.concat(danno);
+  tr.concat(',');
+  tr.concat(danno);
+  if (distanza) {
+    tr.concat(Stringa((char*) ",true,"));
+  } else {
+    tr.concat(Stringa((char*) ",false,"));
+  }
+  tr.concat(ricompensa);
+  tr.concat('\n');
+  return tr;
+}

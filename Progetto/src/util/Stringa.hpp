@@ -6,10 +6,16 @@
 #define STRINGA_HPP
 
 #include <cstring>
+#include <cmath>
 
 const int MAX_LENGTH = 200;
 
 class Stringa {
+
+  protected:
+    int pesoPiuSignificativo(int n);
+
+    void intToCharArray(int n, char c[]);
   
   public:
     char s[MAX_LENGTH];
@@ -17,6 +23,12 @@ class Stringa {
     Stringa();
     
     Stringa(char str[]);
+
+    void concat(Stringa s);
+
+    void concat(char c);
+
+    void concat(int n);
 };
 
 #endif

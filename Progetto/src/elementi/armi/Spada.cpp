@@ -8,10 +8,7 @@
 
 class Spada : public Arma {
   
-  protected:
-    char nome[10] = "Spada";
-  
   public:
     // costruttore
-    Spada() : Arma(Stringa(nome), 15, 300, false, false) {}
+    Spada() : Arma(Stringa((char*) "Spada"), 15, 300, false, false) {}
 };

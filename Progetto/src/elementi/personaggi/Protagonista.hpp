@@ -5,7 +5,6 @@
 #ifndef PROTAGONISTA_HPP
 #define PROTAGONISTA_HPP
 
-#include "../armi/Arma.hpp"
 #include "../armi/Bastone.cpp"
 #include "../../util/Stringa.hpp"
 
@@ -15,7 +14,9 @@ class Protagonista {
     Stringa nome;
     int vita;
     int denaro;
-    Arma arma = Bastone();
+    Arma arma = Arma();
+    // se true il protagonista è rivolto a destra, false a sinistra
+    bool versoDestra;
   
   public:
 
@@ -29,11 +30,17 @@ class Protagonista {
 
     Arma getArma();
 
+    bool isVersoDestra();
+
     void guadagna(int soldi);
 
     bool spendi(int soldi);
 
     void cambiaArma(Arma a);
+
+    Stringa toString();
+
+    Stringa getData();
 };
 
 #endif

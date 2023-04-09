@@ -28,6 +28,8 @@ class Negozio {
     Negozio();
 
     Arma vendiArma(int position);
+
+    Stringa mostraArticoli();
 };
 
 #endif

@@ -35,6 +35,10 @@ class Nemico {
     bool isDistanza();
 
     int getRicompensa();
+
+    Stringa toString();
+
+    Stringa getData();
 };
 
 #endif
