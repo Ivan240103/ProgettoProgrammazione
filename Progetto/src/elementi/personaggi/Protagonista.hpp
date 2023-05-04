@@ -6,21 +6,32 @@
 #define PROTAGONISTA_HPP
 
 #include "../armi/Bastone.cpp"
+#include "../armi/Spada.cpp"
+#include "../armi/PallaChiodata.cpp"
+#include "../armi/Arco.cpp"
 #include "../../util/Stringa.hpp"
+#include "../../util/GestoreFile.hpp"
 
 class Protagonista {
   
   protected:
+    // per salvare e caricare i dati
+    GestoreFile gf;
+    // nome del protagonista
     Stringa nome;
+    // vita residua
     int vita;
+    // denaro disponibile
     int denaro;
-    Arma arma = Arma();
+    // arma equipaggiata
+    Arma arma = Arma(Stringa((char*) "tmp"));
+    // punti ottenuti
+    int punti;
     // se true il protagonista è rivolto a destra, false a sinistra
     bool versoDestra;
   
   public:
-
-    Protagonista(Stringa nome);
+    Protagonista();
 
     Stringa getNome();
 
@@ -30,7 +41,15 @@ class Protagonista {
 
     Arma getArma();
 
+    int getPunti();
+
     bool isVersoDestra();
+
+    int getDifficolta();
+
+    bool prendiDanno(int danno);
+
+    int infliggiDanno();
 
     void guadagna(int soldi);
 
@@ -38,9 +57,13 @@ class Protagonista {
 
     void cambiaArma(Arma a);
 
+    void aggiungiPunti(int p);
+
+    void rigenera();
+
     Stringa toString();
 
-    Stringa getData();
+    void salva();
 };
 
 #endif

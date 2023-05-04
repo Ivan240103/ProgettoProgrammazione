@@ -1,7 +1,7 @@
 #include "Nemico.hpp"
 
 // costruttore
-Nemico::Nemico(Stringa nome, int vita = 10, int minDanno = 1, int maxDanno = 1, bool distanza = false, int ricompensa = 2) {
+Nemico::Nemico(Stringa nome, int vita, int minDanno, int maxDanno, bool distanza, int ricompensa) {
   this->nome = nome;
   this->vita = vita;
   srand(time(0));
@@ -9,6 +9,8 @@ Nemico::Nemico(Stringa nome, int vita = 10, int minDanno = 1, int maxDanno = 1, 
   this->distanza = distanza;
   this->ricompensa = ricompensa;
 }
+
+// GETTERS
 
 Stringa Nemico::getNome() {
   return nome;
@@ -30,6 +32,19 @@ int Nemico::getRicompensa() {
   return ricompensa;
 }
 
+// riduce la vita al nemico
+// Postcondition: true se è ancora vivo, false se è morto
+bool Nemico::prendiDanno(int danno) {
+  vita -= danno;
+  if (vita <= 0) {
+    vita = 0;
+    return false;
+  } else {
+    return true;
+  }
+}
+
+// Postcondition: descrizione del nemico
 Stringa Nemico::toString() {
   Stringa tr = nome;
   tr.concat(Stringa((char*) " - Vita: "));
@@ -46,6 +61,7 @@ Stringa Nemico::toString() {
   return tr;
 }
 
+// Postcondition: dati da salvare su file
 Stringa Nemico::getData() {
   Stringa tr = nome;
   tr.concat(',');
@@ -54,11 +70,13 @@ Stringa Nemico::getData() {
   tr.concat(danno);
   tr.concat(',');
   tr.concat(danno);
+  tr.concat(',');
   if (distanza) {
-    tr.concat(Stringa((char*) ",true,"));
+    tr.concat(1);
   } else {
-    tr.concat(Stringa((char*) ",false,"));
+    tr.concat(0);
   }
+  tr.concat(',');
   tr.concat(ricompensa);
   tr.concat('\n');
   return tr;

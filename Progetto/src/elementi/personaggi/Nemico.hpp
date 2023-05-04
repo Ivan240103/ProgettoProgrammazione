@@ -14,8 +14,11 @@
 class Nemico {
   
   protected:
+    // nome del nemico
     Stringa nome;
+    // vita residua
     int vita;
+    // danno causabile
     int danno;
     // se è true il nemico può colpire a distanza
     bool distanza;
@@ -23,8 +26,14 @@ class Nemico {
     int ricompensa;
 
   public:
-    
-    Nemico(Stringa nome, int vita, int minDanno, int maxDanno, bool distanza, int ricompensa);
+    Nemico(
+      Stringa nome,
+      int vita = 10,
+      int minDanno = 1,
+      int maxDanno = 1,
+      bool distanza = false,
+      int ricompensa = 20
+    );
 
     Stringa getNome();
 
@@ -35,6 +44,8 @@ class Nemico {
     bool isDistanza();
 
     int getRicompensa();
+
+    bool prendiDanno(int danno);
 
     Stringa toString();
 
