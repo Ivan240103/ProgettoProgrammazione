@@ -19,6 +19,8 @@ class Livello {
   typedef nodo* pnodo;
   
   protected:
+    // per salvare i dati su file
+    GestoreFile gf;
     // identificativo del livello (difficoltà)
     int id;
     // true se c'è il protagonista nel livello
@@ -42,6 +44,8 @@ class Livello {
     void inserisciNemico(Nemico n);
 
     void rimuoviNemici();
+
+    void salva();
 };
 
 #endif

@@ -31,6 +31,8 @@ class GestoreFile {
 
     void apriOutput(Stringa path);
 
+    void apriOutputApp(Stringa path);
+
     void chiudiInput();
 
     void chiudiOutput();

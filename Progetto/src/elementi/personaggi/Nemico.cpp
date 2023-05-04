@@ -70,11 +70,14 @@ Stringa Nemico::getData() {
   tr.concat(danno);
   tr.concat(',');
   tr.concat(danno);
+  tr.concat(',');
   if (distanza) {
-    tr.concat(Stringa((char*) ",1,"));
+    tr.concat(1);
   } else {
-    tr.concat(Stringa((char*) ",0,"));
+    tr.concat(0);
   }
+  tr.concat(',');
   tr.concat(ricompensa);
+  tr.concat('\n');
   return tr;
 }

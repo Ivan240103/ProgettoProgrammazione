@@ -4,7 +4,7 @@ Progetto di programmazione - Unibo
 ## Documentazione
 
 ### DEBUG
-Ivan: Comando che funziona(va) per eseguire in VS Code: cd "/home/ivan/Documenti/Unibo/ProgettoProgrammazione-ivan/Progetto/src/main/" && g++ Gioco.cpp ../elementi/personaggi/Protagonista.cpp Negozio.cpp ../elementi/armi/Arma.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp -o Gioco && "/home/ivan/Documenti/Unibo/ProgettoProgrammazione-ivan/Progetto/src/main/"Gioco
+Ivan: Comando che funziona(va) per eseguire in VS Code: cd "/home/ivan/Documenti/Unibo/ProgettoProgrammazione-ivan/Progetto/src/main/" && g++ Gioco.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp Negozio.cpp Livello.cpp ../elementi/armi/Arma.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp -o Gioco && "/home/ivan/Documenti/Unibo/ProgettoProgrammazione-ivan/Progetto/src/main/"Gioco
 
 ### comandi
 a: spostamento a sinistra

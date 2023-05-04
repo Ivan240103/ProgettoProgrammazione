@@ -11,6 +11,7 @@ void Livello::rimuoviTesta() {
 
 // costruttore
 Livello::Livello(int id, bool attuale) {
+  this->gf = GestoreFile();
   this->id = id;
   this->attuale = attuale;
   this->hnemici = NULL;
@@ -61,4 +62,27 @@ void Livello::rimuoviNemici() {
       }
     }
   }
+}
+
+// salva il livello su file
+void Livello::salva() {
+  gf.apriOutputApp(gf.getFilePartita());
+  Stringa scr = Stringa((char*) "@");
+  scr.concat(id);
+  scr.concat(',');
+  if (attuale) {
+    scr.concat(1);
+  } else {
+    scr.concat(0);
+  }
+  scr.concat('\n');
+  gf.scrivi(scr);
+  pnodo mv = hnemici;
+  while (mv != NULL) {
+    gf.scrivi(mv->nem.getData());
+    mv = mv->succ;
+  }
+  scr = Stringa((char*) "#\n");
+  gf.scrivi(scr);
+  gf.chiudiOutput();
 }

@@ -102,6 +102,9 @@ void Protagonista::aggiungiPunti(int p) {
 void Protagonista::rigenera() {
   vita = 100;
   punti = 0;
+  // eliminazione livelli precedenti
+  gf.apriOutput(gf.getFilePartita());
+  gf.chiudiOutput();
 }
 
 // Postcondition: descrizione del protagonista
@@ -134,10 +137,11 @@ void Protagonista::salva() {
   ts.concat(arma.getNome());
   ts.concat(',');
   ts.concat(punti);
+  ts.concat(',');
   if (versoDestra) {
-    ts.concat(Stringa((char*) ",1"));
+    ts.concat(1);
   } else {
-    ts.concat(Stringa((char*) ",0"));
+    ts.concat(0);
   }
   gf.apriOutput(gf.getFileProtagonista());
   gf.scrivi(ts);

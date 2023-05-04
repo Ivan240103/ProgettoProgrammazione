@@ -26,6 +26,11 @@ void GestoreFile::apriOutput(Stringa path) {
   out.open(path.s);
 }
 
+// apre il file di output in append
+void GestoreFile::apriOutputApp(Stringa path) {
+  out.open(path.s, ios::app);
+}
+
 // chiude il file di input aperto
 void GestoreFile::chiudiInput() {
   in.close();
