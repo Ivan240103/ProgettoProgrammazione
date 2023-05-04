@@ -8,7 +8,7 @@
 #include <cstring>
 #include <cmath>
 
-const int MAX_LENGTH = 200;
+const int MAX_LENGTH = 250;
 
 class Stringa {
 
@@ -18,6 +18,7 @@ class Stringa {
     void intToCharArray(int n, char c[]);
   
   public:
+    // stringa memorizzata
     char s[MAX_LENGTH];
 
     Stringa();
@@ -29,6 +30,10 @@ class Stringa {
     void concat(char c);
 
     void concat(int n);
+
+    int compareTo(Stringa cmp);
+
+    int toInt();
 };
 
 #endif

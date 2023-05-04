@@ -13,7 +13,8 @@ Stringa Negozio::mostraArticoli() {
   Stringa elenco = Stringa();
   for (int i = 0; i < NUM_ARMI; i++) {
     elenco.concat(i);
-    elenco.concat(Stringa((char*) ") "));
+    elenco.concat(')');
+    elenco.concat(' ');
     elenco.concat(armi[i].toString());
   }
   return elenco;

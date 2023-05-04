@@ -1,22 +1,16 @@
 #include "Arma.hpp"
 
 // costruttore
-Arma::Arma() {
-  this->nome = Stringa((char*) "temp");
-  this->danno = 5;
-  this->costo = 100;
-  this->distanza = false;
-  this->intorno = false;
-}
-
-// costruttore
-Arma::Arma(Stringa nome, int danno = 5, int costo = 100, bool distanza = false, bool intorno = false) {
+Arma::Arma(Stringa nome, int danno, int costo, bool distanza, bool intorno, int coeff) {
   this->nome = nome;
   this->danno = danno;
   this->costo = costo;
   this->distanza = distanza;
   this->intorno = intorno;
+  this->coeff = coeff;
 }
+
+// GETTERS
 
 Stringa Arma::getNome() {
   return nome;
@@ -38,6 +32,10 @@ bool Arma::isIntorno() {
   return intorno;
 }
 
+int Arma::getCoeff() {
+  return coeff;
+}
+
 // Postcondition: descrizione dell'arma
 Stringa Arma::toString() {
   Stringa tr = nome;
@@ -51,28 +49,12 @@ Stringa Arma::toString() {
     tr.concat(Stringa((char*) ", Distanza: false"));
   }
   if (intorno) {
-    tr.concat(Stringa((char*) ", Intorno: true\n"));
+    tr.concat(Stringa((char*) ", Intorno: true"));
   } else {
-    tr.concat(Stringa((char*) ", Intorno: false\n"));
+    tr.concat(Stringa((char*) ", Intorno: false"));
   }
-  return tr;
-}
-
-Stringa Arma::getData() {
-  Stringa tr = nome;
-  tr.concat(',');
-  tr.concat(danno);
-  tr.concat(',');
-  tr.concat(costo);
-  if (distanza) {
-    tr.concat(Stringa((char*) ",true"));
-  } else {
-    tr.concat(Stringa((char*) ",false"));
-  }
-  if (intorno) {
-    tr.concat(Stringa((char*) ",true\n"));
-  } else {
-    tr.concat(Stringa((char*) ",false\n"));
-  }
+  tr.concat(Stringa((char*) ", Coefficiente: "));
+  tr.concat(coeff);
+  tr.concat('\n');
   return tr;
 }

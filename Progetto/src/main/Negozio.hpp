@@ -24,7 +24,6 @@ class Negozio {
     };
 
   public:
-
     Negozio();
 
     Arma vendiArma(int position);
