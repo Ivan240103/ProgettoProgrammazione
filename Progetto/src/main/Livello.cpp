@@ -11,7 +11,6 @@ void Livello::rimuoviTesta() {
 
 // costruttore
 Livello::Livello(int id, bool attuale) {
-  this->gf = GestoreFile();
   this->id = id;
   this->attuale = attuale;
   this->hnemici = NULL;
@@ -64,9 +63,16 @@ void Livello::rimuoviNemici() {
   }
 }
 
+// Postcondition: true se sono stati uccisi tutti i nemici
+bool Livello::isTerminato() {
+  rimuoviNemici();
+  return hnemici == NULL;
+}
+
 // salva il livello su file
-void Livello::salva() {
-  gf.apriOutputApp(gf.getFilePartita());
+// Precondition: il file deve essere già aperto e il chiamante
+// deve occuparsi della sua chiusura
+void Livello::salva(GestoreFile &gf) {
   Stringa scr = Stringa((char*) "@");
   scr.concat(id);
   scr.concat(',');
@@ -84,5 +90,4 @@ void Livello::salva() {
   }
   scr = Stringa((char*) "#\n");
   gf.scrivi(scr);
-  gf.chiudiOutput();
 }

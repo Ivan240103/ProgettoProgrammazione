@@ -29,7 +29,7 @@ class GestoreFile {
 
     void apriInput(Stringa path);
 
-    void apriOutput(Stringa path);
+    void apriOutput(Stringa path, bool app = false);
 
     void apriOutputApp(Stringa path);
 

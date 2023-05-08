@@ -1,1 +1,1 @@
-Cosimo,88,500,Arco,280,1
+Cosimo,84,1000,Arco,340,1

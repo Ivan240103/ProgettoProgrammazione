@@ -22,8 +22,14 @@ void GestoreFile::apriInput(Stringa path) {
 }
 
 // apre il file di output
-void GestoreFile::apriOutput(Stringa path) {
-  out.open(path.s);
+// Precondition: app = true per aprire in modalità append,
+// false tronca il contenuto del file prima di scrivere
+void GestoreFile::apriOutput(Stringa path, bool app) {
+  if (app) {
+    out.open(path.s, ios::app);
+  } else {
+    out.open(path.s);
+  }
 }
 
 // apre il file di output in append

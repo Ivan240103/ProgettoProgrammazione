@@ -102,9 +102,6 @@ void Protagonista::aggiungiPunti(int p) {
 void Protagonista::rigenera() {
   vita = 100;
   punti = 0;
-  // eliminazione livelli precedenti
-  gf.apriOutput(gf.getFilePartita());
-  gf.chiudiOutput();
 }
 
 // Postcondition: descrizione del protagonista
