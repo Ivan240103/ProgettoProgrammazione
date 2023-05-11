@@ -46,6 +46,15 @@ class Livello {
     bool isTerminato();
 
     void salva(GestoreFile &gf);
+
+    // DEBUG: rimuovere quando non servirà più
+    void debug();
+    
+    // DEBUG: rimuovere quando non servirà più
+    Nemico getPrimoNemico();
+    
+    // DEBUG: rimuovere quando non servirà più
+    bool attaccaNemico(int dannoSubito);
 };
 
 #endif

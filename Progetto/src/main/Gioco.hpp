@@ -21,27 +21,44 @@ class Gioco {
   typedef liv* pliv;
 
   protected:
-    // per salvare i dati su file
-    GestoreFile gf;
     // testa della lista bidir dinamica dei livelli
     pliv hlivelli;
     // puntatore al livello in cui si trova il protagonista
     pliv attuale;
 
-    void aggiungiLivello(int id = 1);
+    void creaLivello(int id = 1);
 
-    void eliminaSalvataggi();
+    void aggiungiLivello(Livello livello);
+
+    void setAttuale();
+
+    void eliminaSalvataggi(GestoreFile &gf);
+
+    void resetta(int diffPrimoLivello, GestoreFile &gf);
+
+    void caricaSalvataggi(GestoreFile &gf);
 
   public:
-    Gioco(bool reset = true, int diffPrimoLivello = 1);
+    Gioco();
 
-    void muoviAvanti();
+    Gioco(GestoreFile &gf, bool reset = true, int diffPrimoLivello = 1);
 
-    void muoviIndietro();
+    bool muoviAvanti();
 
-    void salva();
+    bool muoviIndietro();
 
+    void salva(GestoreFile &gf);
+
+    void rimuoviNemici();
+
+    // DEBUG: rimuovere quando non servirà più
     void debug();
+
+    // DEBUG: rimuovere quando non servirà più
+    bool attaccaNemico(int dannoSubito);
+
+    // DEBUG: rimuovere quando non servirà più
+    Nemico getPrimoNemico();
 };
 
 #endif

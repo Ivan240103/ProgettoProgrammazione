@@ -23,7 +23,6 @@ class Arma {
     int coeff;
 
   public:
-    
     Arma(
       Stringa nome,
       int danno = 5,
@@ -45,6 +44,7 @@ class Arma {
 
     int getCoeff();
 
+    // DEBUG: rimuovere quando non servirà più
     Stringa toString();
 };
 

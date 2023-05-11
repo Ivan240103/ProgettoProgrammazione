@@ -1,12 +1,12 @@
 #include "Livello.hpp"
+// DEBUG: rimuovere quando non servirà più
+#include <iostream>
 
 // rimuove il nemico in testa alla lista
 void Livello::rimuoviTesta() {
-  if (hnemici != NULL) {
-    pnodo tmp = hnemici->succ;
-    delete hnemici;
-    hnemici = tmp;
-  }
+  pnodo tmp = hnemici->succ;
+  delete hnemici;
+  hnemici = tmp;
 }
 
 // costruttore
@@ -49,7 +49,7 @@ void Livello::rimuoviNemici() {
   while (hnemici != NULL && hnemici->nem.getVita() == 0) {
     rimuoviTesta();
   }
-  if (hnemici != NULL /*&& hnemici->succ != NULL*/) {
+  if (hnemici != NULL) {
     pnodo mv = hnemici;
     while (mv->succ != NULL) {
       if (mv->succ->nem.getVita() == 0) {
@@ -73,7 +73,7 @@ bool Livello::isTerminato() {
 // Precondition: il file deve essere già aperto e il chiamante
 // deve occuparsi della sua chiusura
 void Livello::salva(GestoreFile &gf) {
-  Stringa scr = Stringa((char*) "@");
+  Stringa scr = Stringa((char*) "@,");
   scr.concat(id);
   scr.concat(',');
   if (attuale) {
@@ -88,6 +88,23 @@ void Livello::salva(GestoreFile &gf) {
     gf.scrivi(mv->nem.getData());
     mv = mv->succ;
   }
-  scr = Stringa((char*) "#\n");
-  gf.scrivi(scr);
+}
+
+void Livello::debug() {
+  cout<<"id: "<<id<<endl;
+  cout<<"attuale: "<<attuale<<endl;
+  pnodo mv = hnemici;
+  while (mv != NULL) {
+    cout<<mv->nem.toString().s;
+    mv = mv->succ;
+  }
+  cout<<"-------"<<endl;
+}
+
+Nemico Livello::getPrimoNemico() {
+  return hnemici->nem;
+}
+
+bool Livello::attaccaNemico(int dannoSubito) {
+  return hnemici->nem.prendiDanno(dannoSubito);
 }

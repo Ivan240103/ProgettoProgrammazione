@@ -1,8 +1,7 @@
 #include "Protagonista.hpp"
 
 // costruttore
-Protagonista::Protagonista() {
-  this->gf = GestoreFile();
+Protagonista::Protagonista(GestoreFile &gf) {
   gf.apriInput(gf.getFileProtagonista());
 
   this->nome = gf.leggiParola();
@@ -52,7 +51,7 @@ bool Protagonista::isVersoDestra() {
 
 // Postcondition: difficoltà del livello iniziale in base alle condizioni
 int Protagonista::getDifficolta() {
-  return arma.getCoeff() + vita % 10;
+  return arma.getCoeff() + vita / 20;
 }
 
 // riduce la vita al protagonista
@@ -67,7 +66,6 @@ bool Protagonista::prendiDanno(int danno) {
   }
 }
 
-// decrementa il denaro
 // Postcondition: danno causabile dal protagonista
 int Protagonista::infliggiDanno() {
   return arma.getDanno();
@@ -78,6 +76,7 @@ void Protagonista::guadagna(int soldi) {
   denaro += soldi;
 }
 
+// decrementa il denaro
 // Postcondition: false se il denaro non è sufficiente, true se tutto apposto
 bool Protagonista::spendi(int soldi) {
   bool tr = false;
@@ -124,7 +123,7 @@ Stringa Protagonista::toString() {
 }
 
 // salva il protagonista su file
-void Protagonista::salva() {
+void Protagonista::salva(GestoreFile &gf) {
   Stringa ts = nome;
   ts.concat(',');
   ts.concat(vita);

@@ -9,15 +9,15 @@ using namespace std;
 #include "../elementi/personaggi/Protagonista.hpp"
 
 int main() {
-  Protagonista p = Protagonista();
-  /* Gioco g;
+  GestoreFile gf = GestoreFile();
+  Protagonista p = Protagonista(gf);
+  Gioco g = Gioco();
   if (p.getVita() == 0) {
     p.rigenera();
-    g = Gioco(true, p.getDifficolta());
+    g = Gioco(gf, true, p.getDifficolta());
   } else {
-    g = Gioco(false);
-  } */
-  Gioco g = Gioco(true, 0);
+    g = Gioco(gf, false);
+  }
   Negozio negozio = Negozio();
 
   bool ciclo = true, cicloNeg;
@@ -26,18 +26,18 @@ int main() {
 
   do {
     cout<<endl<<"Inserisci il numero corrispondente alla scelta:"<<endl;
-    cout<<"0) Termina esecuzione. 1) Stampa resoconto. 2) Vai al negozio. 3) Guadagna 500 denari."<<endl;
-    cout<<"4) Ricevi 30 punti ma anche 2 di danno."<<endl;
+    cout<<"0) Termina esecuzione 1) Stampa resoconto 2) Vai al negozio 3) Attacca nemico"<<endl;
+    cout<<"4) Prendi danno dal nemico 5) Muovi avanti di livello 6) Muovi indietro di livello"<<endl;
     cin>>scelta;
     cout<<endl;
     switch (scelta) {
       case 0:
-        cout<<"Partita terminata"<<endl;
         ciclo = false;
         break;
       case 1:
         cout<<p.toString().s;
         cout<<p.getArma().toString().s;
+        g.debug();
         break;
       case 2:
         cicloNeg = true;
@@ -71,14 +71,32 @@ int main() {
         } while (cicloNeg);
         break;
       case 3:
-        p.guadagna(500);
-        cout<<p.getNome().s<<" ha guadagnato 500 denari. Saldo attuale: "<<p.getDenaro()<<endl;
+        if (g.attaccaNemico(p.infliggiDanno())) {
+          cout<<"Nemico colpito!"<<endl;
+        } else {
+          cout<<"Nemico ucciso!"<<endl;
+          p.guadagna(g.getPrimoNemico().getRicompensa());
+          p.aggiungiPunti(g.getPrimoNemico().getRicompensa());
+          g.rimuoviNemici();
+        }
         break;
       case 4:
-        p.aggiungiPunti(30);
-        p.prendiDanno(2);
-        cout<<p.getNome().s<<" ha ricevuto 30 punti. Punti attuali: "<<p.getPunti()<<endl;
-        cout<<p.getNome().s<<" ha subito 2 di danno. Vita attuale: "<<p.getVita()<<endl;
+        p.prendiDanno(g.getPrimoNemico().getDanno());
+        cout<<"Ahia! Questo ha fatto male..."<<endl;
+        break;
+      case 5:
+        if (g.muoviAvanti()) {
+          cout<<p.getNome().s<<" avanza di livello"<<endl;
+        } else {
+          cout<<"Non puoi ancora avanzare"<<endl;
+        }
+        break;
+      case 6:
+        if (g.muoviIndietro()) {
+          cout<<p.getNome().s<<" indietreggia di livello"<<endl;
+        } else {
+          cout<<"Non puoi andare indietro ancora"<<endl;
+        }
         break;
       default:
         cout<<"Scelta inesistente"<<endl;
@@ -86,8 +104,10 @@ int main() {
     }
   } while (ciclo && p.getVita() > 0);
 
-  p.salva();
-  g.salva();
+  cout<<"Gioco terminato"<<endl;
+
+  p.salva(gf);
+  g.salva(gf);
   
   return 0;
 }
