@@ -46,6 +46,9 @@ class Livello {
     bool isTerminato();
 
     void salva(GestoreFile &gf);
+
+    // DEBUG: rimuovere quando non servirà più
+    void debug();
 };
 
 #endif

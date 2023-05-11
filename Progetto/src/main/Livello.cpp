@@ -1,4 +1,6 @@
 #include "Livello.hpp"
+// DEBUG: rimuovere quando non servirà più
+#include <iostream>
 
 // rimuove il nemico in testa alla lista
 void Livello::rimuoviTesta() {
@@ -73,7 +75,7 @@ bool Livello::isTerminato() {
 // Precondition: il file deve essere già aperto e il chiamante
 // deve occuparsi della sua chiusura
 void Livello::salva(GestoreFile &gf) {
-  Stringa scr = Stringa((char*) "@");
+  Stringa scr = Stringa((char*) "@,");
   scr.concat(id);
   scr.concat(',');
   if (attuale) {
@@ -88,6 +90,15 @@ void Livello::salva(GestoreFile &gf) {
     gf.scrivi(mv->nem.getData());
     mv = mv->succ;
   }
-  scr = Stringa((char*) "#\n");
-  gf.scrivi(scr);
+}
+
+void Livello::debug() {
+  cout<<"id: "<<id<<endl;
+  cout<<"attuale: "<<attuale<<endl;
+  pnodo mv = hnemici;
+  while (mv != NULL) {
+    cout<<mv->nem.toString().s;
+    mv = mv->succ;
+  }
+  cout<<"-------"<<endl;
 }

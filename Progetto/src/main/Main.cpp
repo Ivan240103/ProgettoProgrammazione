@@ -9,15 +9,15 @@ using namespace std;
 #include "../elementi/personaggi/Protagonista.hpp"
 
 int main() {
-  Protagonista p = Protagonista();
-  /* Gioco g;
+  GestoreFile gf = GestoreFile();
+  Protagonista p = Protagonista(gf);
+  Gioco g = Gioco();
   if (p.getVita() == 0) {
     p.rigenera();
-    g = Gioco(true, p.getDifficolta());
+    g = Gioco(gf, true, p.getDifficolta());
   } else {
-    g = Gioco(false);
-  } */
-  Gioco g = Gioco(true, 0);
+    g = Gioco(gf, false);
+  }
   Negozio negozio = Negozio();
 
   bool ciclo = true, cicloNeg;
@@ -38,6 +38,7 @@ int main() {
       case 1:
         cout<<p.toString().s;
         cout<<p.getArma().toString().s;
+        g.debug();
         break;
       case 2:
         cicloNeg = true;
@@ -86,8 +87,8 @@ int main() {
     }
   } while (ciclo && p.getVita() > 0);
 
-  p.salva();
-  g.salva();
+  p.salva(gf);
+  g.salva(gf);
   
   return 0;
 }

@@ -1,1 +1,1 @@
-Cosimo,84,1000,Arco,340,1
+Cosimo,94,250,PallaChiodata,90,1

@@ -47,6 +47,7 @@ class Nemico {
 
     bool prendiDanno(int danno);
 
+    // DEBUG: rimuovere quando non servirà più
     Stringa toString();
 
     Stringa getData();

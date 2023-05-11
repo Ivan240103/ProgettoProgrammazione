@@ -15,8 +15,6 @@
 class Protagonista {
   
   protected:
-    // per salvare e caricare i dati
-    GestoreFile gf;
     // nome del protagonista
     Stringa nome;
     // vita residua
@@ -31,7 +29,7 @@ class Protagonista {
     bool versoDestra;
   
   public:
-    Protagonista();
+    Protagonista(GestoreFile &gf);
 
     Stringa getNome();
 
@@ -61,9 +59,10 @@ class Protagonista {
 
     void rigenera();
 
+    // DEBUG: rimuovere quando non servirà più
     Stringa toString();
 
-    void salva();
+    void salva(GestoreFile &gf);
 };
 
 #endif

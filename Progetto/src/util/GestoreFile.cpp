@@ -55,12 +55,12 @@ Stringa GestoreFile::leggiParola() {
   char c;
   do {
     in.get(c);
-    if (c != ',' && !in.eof()) {
+    if (c != ',' && c != '\n' && !in.eof()) {
       lettura.concat(c);
     } else {
       lettura.concat('\0');
     }
-  } while (c != ',' && !in.eof());
+  } while (c != ',' && c != '\n' && !in.eof());
   return lettura;
 }
 
