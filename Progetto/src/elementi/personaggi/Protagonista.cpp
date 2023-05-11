@@ -66,7 +66,6 @@ bool Protagonista::prendiDanno(int danno) {
   }
 }
 
-// decrementa il denaro
 // Postcondition: danno causabile dal protagonista
 int Protagonista::infliggiDanno() {
   return arma.getDanno();
@@ -77,6 +76,7 @@ void Protagonista::guadagna(int soldi) {
   denaro += soldi;
 }
 
+// decrementa il denaro
 // Postcondition: false se il denaro non è sufficiente, true se tutto apposto
 bool Protagonista::spendi(int soldi) {
   bool tr = false;

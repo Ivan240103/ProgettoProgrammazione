@@ -36,5 +36,3 @@ Quando il protagonista muore la partita riparte da un livello x generato, mentre
 vengono rimossi. Se l'utente esce dal gioco salvando quando il protagonista è ancora vivo, al caricamento del
 gioco si ritroverà esattamente nella stessa situazione in cui era prima di chiudere.
 Se al caricamento del gioco la vita del protagonista è 0 vuol dire che era morto alla fine della partita.
-Ogni volta che si passa di livello, quello precedente viene salvato/aggiornato nel db.
-Ogni tot secondi viene salvato anche il livello in cui si trova il protagonista attualmente (autosalvataggio)

@@ -4,11 +4,9 @@
 
 // rimuove il nemico in testa alla lista
 void Livello::rimuoviTesta() {
-  if (hnemici != NULL) {
-    pnodo tmp = hnemici->succ;
-    delete hnemici;
-    hnemici = tmp;
-  }
+  pnodo tmp = hnemici->succ;
+  delete hnemici;
+  hnemici = tmp;
 }
 
 // costruttore
@@ -51,7 +49,7 @@ void Livello::rimuoviNemici() {
   while (hnemici != NULL && hnemici->nem.getVita() == 0) {
     rimuoviTesta();
   }
-  if (hnemici != NULL /*&& hnemici->succ != NULL*/) {
+  if (hnemici != NULL) {
     pnodo mv = hnemici;
     while (mv->succ != NULL) {
       if (mv->succ->nem.getVita() == 0) {
@@ -101,4 +99,12 @@ void Livello::debug() {
     mv = mv->succ;
   }
   cout<<"-------"<<endl;
+}
+
+Nemico Livello::getPrimoNemico() {
+  return hnemici->nem;
+}
+
+bool Livello::attaccaNemico(int dannoSubito) {
+  return hnemici->nem.prendiDanno(dannoSubito);
 }

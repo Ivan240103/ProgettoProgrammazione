@@ -43,14 +43,22 @@ class Gioco {
 
     Gioco(GestoreFile &gf, bool reset = true, int diffPrimoLivello = 1);
 
-    void muoviAvanti();
+    bool muoviAvanti();
 
-    void muoviIndietro();
+    bool muoviIndietro();
 
     void salva(GestoreFile &gf);
 
+    void rimuoviNemici();
+
     // DEBUG: rimuovere quando non servirà più
     void debug();
+
+    // DEBUG: rimuovere quando non servirà più
+    bool attaccaNemico(int dannoSubito);
+
+    // DEBUG: rimuovere quando non servirà più
+    Nemico getPrimoNemico();
 };
 
 #endif

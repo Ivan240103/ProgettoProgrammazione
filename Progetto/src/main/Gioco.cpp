@@ -118,7 +118,9 @@ Gioco::Gioco(GestoreFile &gf, bool reset, int diffPrimoLivello) {
 }
 
 // sposta il protagonista nel livello successivo se possibile
-void Gioco::muoviAvanti() {
+// Postcondition: true se si è mosso, false altrimenti
+bool Gioco::muoviAvanti() {
+  bool mosso = false;
   if (attuale->l.isTerminato()) {
     if (attuale->succ == NULL) {
       creaLivello(attuale->l.getId() + 1);
@@ -126,16 +128,22 @@ void Gioco::muoviAvanti() {
     attuale->l.protagonistaAddios();
     attuale = attuale->succ;
     attuale->l.protagonistaArriva();
+    mosso = true;
   }
+  return mosso;
 }
 
 // sposta il protagonista nel livello precedente
-void Gioco::muoviIndietro() {
+// Postcondition: true se si è mosso, false altrimenti
+bool Gioco::muoviIndietro() {
+  bool mosso = false;
   if (attuale->prec != NULL) {
     attuale->l.protagonistaAddios();
     attuale = attuale->prec;
     attuale->l.protagonistaArriva();
+    mosso = true;
   }
+  return mosso;
 }
 
 // salva la partita su file
@@ -151,12 +159,24 @@ void Gioco::salva(GestoreFile &gf) {
   gf.chiudiOutput();
 }
 
+void Gioco::rimuoviNemici() {
+  attuale->l.rimuoviNemici();
+}
+
 void Gioco::debug() {
-  pliv mv = hlivelli;
+  /* pliv mv = hlivelli;
   while (mv != NULL) {
     mv->l.debug();
     mv = mv->succ;
-  }
+  } */
   cout<<"Attuale: "<<endl;
   attuale->l.debug();
+}
+
+bool Gioco::attaccaNemico(int dannoSubito) {
+  return attuale->l.attaccaNemico(dannoSubito);
+}
+
+Nemico Gioco::getPrimoNemico() {
+  return attuale->l.getPrimoNemico();
 }
