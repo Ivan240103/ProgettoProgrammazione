@@ -18,6 +18,8 @@ Protagonista::Protagonista(GestoreFile &gf) {
     this->arma = Bastone();
   }
   this->punti = gf.leggiParola().toInt();
+  this->x = gf.leggiParola().toInt();
+  this->y = gf.leggiParola().toInt();
   this->versoDestra = gf.leggiParola().toInt();
 
   gf.chiudiInput();
@@ -43,6 +45,14 @@ Arma Protagonista::getArma() {
 
 int Protagonista::getPunti() {
   return punti;
+}
+
+int Protagonista::getX() {
+  return x;
+}
+
+int Protagonista::getY() {
+  return y;
 }
 
 bool Protagonista::isVersoDestra() {
@@ -97,10 +107,38 @@ void Protagonista::aggiungiPunti(int p) {
   punti += p;
 }
 
+// sposta il protagonista a destra
+// Precondition: quantità x di cui spostarlo
+void Protagonista::muoviDx(int spost) {
+  x += spost;
+  versoDestra = true;
+}
+
+// sposta il protagonista a sinistra
+// Precondition: quantità x di cui spostarlo
+void Protagonista::muoviSx(int spost) {
+  x -= spost;
+  versoDestra = false;
+}
+
+// sposta il protagonista in alto
+// Precondition: quantità y di cui spostarlo
+void Protagonista::salta(int spost) {
+  y += spost;
+}
+
+// riporta il protagonista nella posizione iniziale
+void Protagonista::resetPosizione() {
+  x = 1;
+  y = 1;
+}
+
 // rigenera il protagonista dopo la morte
 void Protagonista::rigenera() {
   vita = 100;
   punti = 0;
+  x = 1;
+  y = 1;
 }
 
 // Postcondition: descrizione del protagonista
@@ -114,6 +152,11 @@ Stringa Protagonista::toString() {
   tr.concat(arma.getNome());
   tr.concat(Stringa((char*) ", Punti: "));
   tr.concat(punti);
+  tr.concat(Stringa((char*) ", ("));
+  tr.concat(x);
+  tr.concat(',');
+  tr.concat(y);
+  tr.concat(')');
   if (versoDestra) {
     tr.concat(Stringa((char*) ", VersoDestra: true\n"));
   } else {
@@ -133,6 +176,10 @@ void Protagonista::salva(GestoreFile &gf) {
   ts.concat(arma.getNome());
   ts.concat(',');
   ts.concat(punti);
+  ts.concat(',');
+  ts.concat(x);
+  ts.concat(',');
+  ts.concat(y);
   ts.concat(',');
   if (versoDestra) {
     ts.concat(1);

@@ -27,7 +27,8 @@ int main() {
   do {
     cout<<endl<<"Inserisci il numero corrispondente alla scelta:"<<endl;
     cout<<"0) Termina esecuzione 1) Stampa resoconto 2) Vai al negozio 3) Attacca nemico"<<endl;
-    cout<<"4) Prendi danno dal nemico 5) Muovi avanti di livello 6) Muovi indietro di livello"<<endl;
+    cout<<"4) Prendi danno dal nemico 5) Avanti di livello 6) Indietro di livello"<<endl;
+    cout<<"7) Muovi a destra 8) Muovi a sinistra 9) Salta"<<endl;
     cin>>scelta;
     cout<<endl;
     switch (scelta) {
@@ -86,6 +87,7 @@ int main() {
         break;
       case 5:
         if (g.muoviAvanti()) {
+          p.resetPosizione();
           cout<<p.getNome().s<<" avanza di livello"<<endl;
         } else {
           cout<<"Non puoi ancora avanzare"<<endl;
@@ -93,10 +95,23 @@ int main() {
         break;
       case 6:
         if (g.muoviIndietro()) {
+          p.resetPosizione();
           cout<<p.getNome().s<<" indietreggia di livello"<<endl;
         } else {
           cout<<"Non puoi andare indietro ancora"<<endl;
         }
+        break;
+      case 7:
+        p.muoviDx();
+        cout<<"Posizione attuale ("<<p.getX()<<","<<p.getY()<<")"<<endl;
+        break;
+      case 8:
+        p.muoviSx();
+        cout<<"Posizione attuale ("<<p.getX()<<","<<p.getY()<<")"<<endl;
+        break;
+      case 9:
+        p.salta();
+        cout<<"Posizione attuale ("<<p.getX()<<","<<p.getY()<<")"<<endl;
         break;
       default:
         cout<<"Scelta inesistente"<<endl;

@@ -13,7 +13,7 @@ class Guardia : public Nemico {
 
   public:
     // costruttore
-    Guardia() : Nemico(Stringa((char*) "Guardia"), 40, 5, 8, true, 50) {}
+    Guardia(int x = 1, int y = 1) : Nemico(Stringa((char*) "Guardia"), 40, 5, 8, true, 50, x, y) {}
 };
 
 #endif
