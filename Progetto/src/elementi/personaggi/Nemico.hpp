@@ -24,6 +24,8 @@ class Nemico {
     bool distanza;
     // denaro dato al protagonista dopo l'uccisione
     int ricompensa;
+    // coordinate (x,y) della posizione a schermo
+    int x, y;
 
   public:
     Nemico(
@@ -32,7 +34,9 @@ class Nemico {
       int minDanno = 1,
       int maxDanno = 1,
       bool distanza = false,
-      int ricompensa = 20
+      int ricompensa = 20,
+      int x = 1,
+      int y = 1
     );
 
     Stringa getNome();
@@ -45,7 +49,17 @@ class Nemico {
 
     int getRicompensa();
 
+    int getX();
+
+    int getY();
+
     bool prendiDanno(int danno);
+
+    void muoviDx(int spost = 1);
+
+    void muoviSx(int spost = 1);
+    
+    void salta(int spost = 1);
 
     // DEBUG: rimuovere quando non servirà più
     Stringa toString();

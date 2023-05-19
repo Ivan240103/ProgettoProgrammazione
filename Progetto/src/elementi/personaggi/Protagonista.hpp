@@ -25,6 +25,8 @@ class Protagonista {
     Arma arma = Arma(Stringa((char*) "tmp"));
     // punti ottenuti
     int punti;
+    // coordinate (x, y) della posizione a schermo
+    int x, y;
     // se true il protagonista è rivolto a destra, false a sinistra
     bool versoDestra;
   
@@ -41,6 +43,10 @@ class Protagonista {
 
     int getPunti();
 
+    int getX();
+
+    int getY();
+
     bool isVersoDestra();
 
     int getDifficolta();
@@ -56,6 +62,14 @@ class Protagonista {
     void cambiaArma(Arma a);
 
     void aggiungiPunti(int p);
+
+    void muoviDx(int spost = 1);
+
+    void muoviSx(int spost = 1);
+
+    void salta(int spost = 1);
+
+    void resetPosizione();
 
     void rigenera();
 

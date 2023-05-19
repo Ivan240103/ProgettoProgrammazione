@@ -71,7 +71,7 @@ void Gioco::resetta(int diffPrimoLivello, GestoreFile &gf) {
 
 // carica i dati salvati su file per riprendere la partita
 void Gioco::caricaSalvataggi(GestoreFile &gf) {
-  int f_id, f_vita, f_mindanno, f_maxdanno, f_ricompensa;
+  int f_id, f_vita, f_mindanno, f_maxdanno, f_ricompensa, f_x, f_y;
   bool prosegui, f_attuale, f_distanza;
   gf.apriInput(gf.getFilePartita());
   Stringa input = gf.leggiParola();
@@ -94,7 +94,9 @@ void Gioco::caricaSalvataggi(GestoreFile &gf) {
         f_maxdanno = gf.leggiParola().toInt();
         f_distanza = gf.leggiParola().toInt();
         f_ricompensa = gf.leggiParola().toInt();
-        Nemico n = Nemico(input, f_vita, f_mindanno, f_maxdanno, f_distanza, f_ricompensa);
+        f_x = gf.leggiParola().toInt();
+        f_y = gf.leggiParola().toInt();
+        Nemico n = Nemico(input, f_vita, f_mindanno, f_maxdanno, f_distanza, f_ricompensa, f_x, f_y);
         livello.inserisciNemico(n);
       }
     } while (prosegui);
