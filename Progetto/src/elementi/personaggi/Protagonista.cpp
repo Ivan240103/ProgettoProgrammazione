@@ -55,6 +55,14 @@ int Protagonista::getY() {
   return y;
 }
 
+void Protagonista::setY(int y){
+  this->y = y;
+}
+
+void Protagonista::setX(int x){
+  this->x = x;
+}
+
 bool Protagonista::isVersoDestra() {
   return versoDestra;
 }
@@ -124,6 +132,12 @@ void Protagonista::muoviSx(int spost) {
 // sposta il protagonista in alto
 // Precondition: quantità y di cui spostarlo
 void Protagonista::salta(int spost) {
+  y -= spost;
+}
+
+// sposta il protagonista in basso
+// Precondition: quantità y di cui spostarlo
+void Protagonista::muoviGiu(int spost) {
   y += spost;
 }
 

@@ -47,6 +47,9 @@ class Protagonista {
 
     int getY();
 
+    void setY(int y);
+    void setX(int x);
+
     bool isVersoDestra();
 
     int getDifficolta();
@@ -66,6 +69,8 @@ class Protagonista {
     void muoviDx(int spost = 1);
 
     void muoviSx(int spost = 1);
+
+    void muoviGiu(int spost = 1);
 
     void salta(int spost = 1);
 

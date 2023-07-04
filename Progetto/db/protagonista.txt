@@ -1,1 +1,1 @@
-Cosimo,50,10,PallaChiodata,300,1,1,1
+Cosimo,50,20,PallaChiodata,310,1,1,1
