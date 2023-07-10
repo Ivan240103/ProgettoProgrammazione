@@ -23,13 +23,16 @@ class Livello {
     int id;
     // true se c'è il protagonista nel livello
     bool attuale;
-    // testa della lista dinamica dei nemici
-    pnodo hnemici;
 
     void rimuoviTesta();
 
   public:
-    Livello(int id = 1, bool attuale = false);
+    Livello(int id=1, bool attuale = false);
+
+    // testa della lista dinamica dei nemici
+    pnodo hnemici;
+
+    pnodo appoggio;
 
     int getId();
 

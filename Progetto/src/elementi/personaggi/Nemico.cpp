@@ -1,8 +1,10 @@
 #include "Nemico.hpp"
 
 // costruttore
-Nemico::Nemico(Stringa nome, int vita, int minDanno, int maxDanno, bool distanza, int ricompensa, int x, int y) {
+Nemico::Nemico(Stringa nome, char simbolo, int vita, int minDanno, int maxDanno, bool distanza, int ricompensa, int x, int y, bool sx) {
+  this->sx=sx;
   this->nome = nome;
+  this->simbolo = simbolo;
   this->vita = vita;
   srand(time(0));
   this->danno = rand() % (maxDanno - minDanno + 1) + minDanno;
@@ -16,6 +18,18 @@ Nemico::Nemico(Stringa nome, int vita, int minDanno, int maxDanno, bool distanza
 
 Stringa Nemico::getNome() {
   return nome;
+}
+
+char Nemico::getSimbolo() {
+  return simbolo;
+}
+
+bool Nemico::getSx(){
+  return sx;
+}
+
+void Nemico::setSx(bool valore){
+  this->sx = valore;
 }
 
 int Nemico::getVita() {
@@ -38,8 +52,20 @@ int Nemico::getX() {
   return x;
 }
 
+void Nemico::setX(int x){
+  this->x= x;
+}
+
 int Nemico::getY() {
   return y;
+}
+
+void Nemico::setY(int y){
+  this->y= y;
+}
+
+void Nemico::MuoviSuGiu(int sposta){
+  this->y+=sposta;
 }
 
 // riduce la vita al nemico
@@ -62,11 +88,6 @@ void Nemico::muoviDx(int spost) {
 // Precondition: quantità x di cui spostarlo
 void Nemico::muoviSx(int spost) {
   x -= spost;
-}
-
-// Precondition: quantità y di cui spostarlo
-void Nemico::salta(int spost) {
-  y += spost;
 }
 
 // Postcondition: descrizione del nemico
@@ -95,6 +116,8 @@ Stringa Nemico::toString() {
 Stringa Nemico::getData() {
   Stringa ts = nome;
   ts.concat(',');
+  ts.concat(simbolo);
+  ts.concat(',');
   ts.concat(vita);
   ts.concat(',');
   ts.concat(danno);
@@ -112,6 +135,9 @@ Stringa Nemico::getData() {
   ts.concat(x);
   ts.concat(',');
   ts.concat(y);
+  ts.concat(',');
+  ts.concat(sx);
+  ts.concat(',');
   ts.concat('\n');
   return ts;
 }

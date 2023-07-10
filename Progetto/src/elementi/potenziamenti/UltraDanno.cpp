@@ -13,7 +13,7 @@ class UltraDanno : public Potenziamento {
   
   public:
     // costruttore
-    UltraDanno() : Potenziamento(Stringa((char*) "UltraDanno"), 150, 5) {}
+    UltraDanno() : Potenziamento(Stringa((char*) "UltraDanno"), 300, 5) {}
 };
 
 #endif

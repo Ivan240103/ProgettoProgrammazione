@@ -36,7 +36,7 @@ int main() {
 
   gu.stampaMappa(finestra);
 
-  gu.gravita(finestra);
+  gu.gioco(finestra);
 
   endwin();
   

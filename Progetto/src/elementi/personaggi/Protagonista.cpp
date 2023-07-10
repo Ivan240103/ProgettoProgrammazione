@@ -63,8 +63,16 @@ void Protagonista::setX(int x){
   this->x = x;
 }
 
+void Protagonista::setVita(int vita){
+  this->vita+=vita;
+}
+
 bool Protagonista::isVersoDestra() {
   return versoDestra;
+}
+
+void Protagonista::setVersoDestra(bool verso){
+  this->versoDestra=verso;
 }
 
 // Postcondition: difficoltà del livello iniziale in base alle condizioni

@@ -48,9 +48,14 @@ class Protagonista {
     int getY();
 
     void setY(int y);
+    
     void setX(int x);
 
+    void setVita(int vita);
+
     bool isVersoDestra();
+
+    void setVersoDestra(bool verso);
 
     int getDifficolta();
 

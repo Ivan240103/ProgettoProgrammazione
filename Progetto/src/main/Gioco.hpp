@@ -21,14 +21,8 @@ class Gioco {
   typedef liv* pliv;
 
   protected:
-    // testa della lista bidir dinamica dei livelli
-    pliv hlivelli;
-    // puntatore al livello in cui si trova il protagonista
-    pliv attuale;
 
     void creaLivello(int id = 1);
-
-    void aggiungiLivello(Livello livello);
 
     void setAttuale();
 
@@ -42,6 +36,13 @@ class Gioco {
     Gioco();
 
     Gioco(GestoreFile &gf, bool reset = true, int diffPrimoLivello = 1);
+    
+    // testa della lista bidir dinamica dei livelli
+    pliv hlivelli;
+    // puntatore al livello in cui si trova il protagonista
+    pliv attuale;
+
+    void aggiungiLivello(Livello livello);
 
     bool muoviAvanti();
 

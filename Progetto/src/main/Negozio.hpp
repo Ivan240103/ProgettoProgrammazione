@@ -14,6 +14,8 @@
 #include "../elementi/armi/Arco.cpp"
 #include "../elementi/potenziamenti/Potenziamento.hpp"
 #include "../elementi/potenziamenti/UltraDanno.cpp"
+#include "../elementi/personaggi/Protagonista.hpp"
+#include "../util/GestoreFile.hpp"
 
 const int NUM_ARMI = 3;
 
@@ -28,17 +30,27 @@ class Negozio {
 
   public:
 
-    Negozio();
+    Negozio(Protagonista pr);
     Spada s = Spada();
     PallaChiodata p = PallaChiodata();
     Arco a = Arco();
     UltraDanno u = UltraDanno();
+    GestoreFile gf = GestoreFile();
+    Protagonista pr = Protagonista(gf);
 
     void stampaNegozio(WINDOW* negozio);
     
     void stampaArmi(WINDOW* negozio);
 
     void armiNegozio(WINDOW* negozio, int &scelta);
+
+    void stampaPotenziamenti(WINDOW* negozio);
+
+    void potenziamentiNegozio(WINDOW* negozio, int &scelta);
+
+    void vitaNegozio(WINDOW* negozio, int &scelta);
+
+    void stampaVita(WINDOW* negozio);
 
     void caratteristiche(int scelta, WINDOW* negozio);
 

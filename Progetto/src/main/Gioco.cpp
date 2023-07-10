@@ -7,7 +7,7 @@ void Gioco::creaLivello(int id) {
   pliv nuovo = new liv;
   nuovo->l = Livello(id, false);
   // algoritmo greedy per generare i nemici
-  while (id > 0) {
+  /*while (id > 0) {
     if (id >= 5) {
       nuovo->l.inserisciNemico(Guardia());
       id -= 5;
@@ -18,7 +18,7 @@ void Gioco::creaLivello(int id) {
       nuovo->l.inserisciNemico(Scheletro());
       id--;
     }
-  }
+  }*/
   nuovo->prec = attuale;
   if (hlivelli == NULL) {
     hlivelli = nuovo;
@@ -72,7 +72,8 @@ void Gioco::resetta(int diffPrimoLivello, GestoreFile &gf) {
 // carica i dati salvati su file per riprendere la partita
 void Gioco::caricaSalvataggi(GestoreFile &gf) {
   int f_id, f_vita, f_mindanno, f_maxdanno, f_ricompensa, f_x, f_y;
-  bool prosegui, f_attuale, f_distanza;
+  char f_simbolo;
+  bool prosegui, f_attuale, f_distanza, f_sx;
   gf.apriInput(gf.getFilePartita());
   Stringa input = gf.leggiParola();
   do {
@@ -89,6 +90,7 @@ void Gioco::caricaSalvataggi(GestoreFile &gf) {
         prosegui = false;
       } else {
         // nemici da caricare
+        f_simbolo = gf.leggiParola().toInt();
         f_vita = gf.leggiParola().toInt();
         f_mindanno = gf.leggiParola().toInt();
         f_maxdanno = gf.leggiParola().toInt();
@@ -96,7 +98,8 @@ void Gioco::caricaSalvataggi(GestoreFile &gf) {
         f_ricompensa = gf.leggiParola().toInt();
         f_x = gf.leggiParola().toInt();
         f_y = gf.leggiParola().toInt();
-        Nemico n = Nemico(input, f_vita, f_mindanno, f_maxdanno, f_distanza, f_ricompensa, f_x, f_y);
+        f_sx = gf.leggiParola().toInt();
+        Nemico n = Nemico(input,f_simbolo, f_vita, f_mindanno, f_maxdanno, f_distanza, f_ricompensa, f_x, f_y, f_sx);
         livello.inserisciNemico(n);
       }
     } while (prosegui);
