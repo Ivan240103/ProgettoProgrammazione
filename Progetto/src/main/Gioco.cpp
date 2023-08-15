@@ -1,24 +1,29 @@
 #include "Gioco.hpp"
-// DEBUG: rimuovere quando non servirà più
-#include <iostream>
 
-// aggiunge un nuovo livello come ultimo
-void Gioco::creaLivello(int id) {
-  pliv nuovo = new liv;
-  nuovo->l = Livello(id, false);
-  // algoritmo greedy per generare i nemici
-  while (id > 0) {
-    if (id >= 5) {
-      nuovo->l.inserisciNemico(Guardia());
-      id -= 5;
-    } else if (id >= 2) {
-      nuovo->l.inserisciNemico(Goblin());
-      id -= 2;
+// cerca se l'id passato è già presente
+// Postcondition: true se l'id esiste, false altrimenti
+bool Gioco::cercaIdLivello(int id) {
+  pliv mv = new liv;
+  bool esiste = false;
+  while (mv != NULL && !esiste) {
+    if (mv->l.getId() == id) {
+      esiste = true;
     } else {
-      nuovo->l.inserisciNemico(Scheletro());
-      id--;
+      mv = mv->succ;
     }
   }
+  return esiste;
+}
+
+// aggiunge un nuovo livello creato da zero come ultimo
+void Gioco::creaLivello() {
+  pliv nuovo = new liv;
+  int id;
+  // l'id deve essere univoco
+  do {
+    id = rand()%100 + 1;
+  } while (cercaIdLivello(id));
+  nuovo->l = Livello(id, false);
   nuovo->prec = attuale;
   if (hlivelli == NULL) {
     hlivelli = nuovo;
@@ -27,7 +32,7 @@ void Gioco::creaLivello(int id) {
   }
 }
 
-// inserimento in coda di un nuovo livello
+// inserimento in coda di un livello esistente
 void Gioco::aggiungiLivello(Livello livello) {
   pliv nuovo = new liv;
   nuovo->l = livello;
@@ -60,19 +65,20 @@ void Gioco::eliminaSalvataggi(GestoreFile &gf) {
 }
 
 // resetta lo stato della parita
-void Gioco::resetta(int diffPrimoLivello, GestoreFile &gf) {
+void Gioco::resetta(GestoreFile &gf) {
   // elimina il salvataggio della partita precedente
   eliminaSalvataggi(gf);
   // creazione primo livello
-  creaLivello(diffPrimoLivello);
-  attuale = hlivelli;
-  attuale->l.protagonistaArriva();
+  Livello primo = Livello(0, true);
+  aggiungiLivello(primo);
+  setAttuale();
 }
 
 // carica i dati salvati su file per riprendere la partita
 void Gioco::caricaSalvataggi(GestoreFile &gf) {
   int f_id, f_vita, f_mindanno, f_maxdanno, f_ricompensa, f_x, f_y;
-  bool prosegui, f_attuale, f_distanza;
+  char f_simbolo;
+  bool prosegui, f_attuale, f_distanza, f_sx;
   gf.apriInput(gf.getFilePartita());
   Stringa input = gf.leggiParola();
   do {
@@ -89,6 +95,7 @@ void Gioco::caricaSalvataggi(GestoreFile &gf) {
         prosegui = false;
       } else {
         // nemici da caricare
+        f_simbolo = gf.leggiParola().toInt();
         f_vita = gf.leggiParola().toInt();
         f_mindanno = gf.leggiParola().toInt();
         f_maxdanno = gf.leggiParola().toInt();
@@ -96,8 +103,13 @@ void Gioco::caricaSalvataggi(GestoreFile &gf) {
         f_ricompensa = gf.leggiParola().toInt();
         f_x = gf.leggiParola().toInt();
         f_y = gf.leggiParola().toInt();
-        Nemico n = Nemico(input, f_vita, f_mindanno, f_maxdanno, f_distanza, f_ricompensa, f_x, f_y);
-        livello.inserisciNemico(n);
+        f_sx = gf.leggiParola().toInt();
+        Nemico n = Nemico(input, f_simbolo, f_vita, f_mindanno, f_maxdanno, f_distanza, f_ricompensa, f_x, f_y, f_sx);
+        if (f_simbolo == '+') {
+          livello.inserisciNemicoCoda(n);
+        } else {
+          livello.inserisciNemicoTesta(n);
+        }
       }
     } while (prosegui);
     // aggiunta livello alla lista
@@ -109,11 +121,13 @@ void Gioco::caricaSalvataggi(GestoreFile &gf) {
 
 Gioco::Gioco() {}
 
-Gioco::Gioco(GestoreFile &gf, bool reset, int diffPrimoLivello) {
+// Precondition: reset true se bisogna ricominciare la partita dal primo livello
+// false se si carica quella precedente da file
+Gioco::Gioco(GestoreFile &gf, bool reset) {
   this->hlivelli = NULL;
   this->attuale = NULL;
   if (reset) {
-    resetta(diffPrimoLivello, gf);
+    resetta(gf);
   } else {
     caricaSalvataggi(gf);
   }
@@ -125,7 +139,7 @@ bool Gioco::muoviAvanti() {
   bool mosso = false;
   if (attuale->l.isTerminato()) {
     if (attuale->succ == NULL) {
-      creaLivello(attuale->l.getId() + 1);
+      creaLivello();
     }
     attuale->l.protagonistaAddios();
     attuale = attuale->succ;
@@ -161,24 +175,7 @@ void Gioco::salva(GestoreFile &gf) {
   gf.chiudiOutput();
 }
 
+// rimuove i nemici con zero di vita dal livello attuale
 void Gioco::rimuoviNemici() {
   attuale->l.rimuoviNemici();
-}
-
-void Gioco::debug() {
-  /* pliv mv = hlivelli;
-  while (mv != NULL) {
-    mv->l.debug();
-    mv = mv->succ;
-  } */
-  cout<<"Attuale: "<<endl;
-  attuale->l.debug();
-}
-
-bool Gioco::attaccaNemico(int dannoSubito) {
-  return attuale->l.attaccaNemico(dannoSubito);
-}
-
-Nemico Gioco::getPrimoNemico() {
-  return attuale->l.getPrimoNemico();
 }

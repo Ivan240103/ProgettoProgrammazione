@@ -1,1 +1,1 @@
-Cosimo,50,10,PallaChiodata,300,1,1,1
+Cosimo,438,3110,Spada,0,7,18,1

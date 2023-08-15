@@ -1,6 +1,6 @@
 /*
  Nemico Guardia
- Causa danno a distanza
+ Causa danno a contatto
 */
 
 #ifndef GUARDIA_CPP
@@ -13,7 +13,7 @@ class Guardia : public Nemico {
 
   public:
     // costruttore
-    Guardia(int x = 1, int y = 1) : Nemico(Stringa((char*) "Guardia"), 40, 5, 8, true, 50, x, y) {}
+    Guardia(int x = 1, int y = 1) : Nemico(Stringa((char*) "Guardia"), 'G', 40, 5, 8, false, 50, x, y, true) {}
 };
 
 #endif

@@ -36,6 +36,8 @@ class Arma {
 
     int getDanno();
 
+    void setDanno(int danno);
+
     int getCosto();
 
     bool isDistanza();

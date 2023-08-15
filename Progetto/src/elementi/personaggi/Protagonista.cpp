@@ -5,6 +5,7 @@ Protagonista::Protagonista(GestoreFile &gf) {
   gf.apriInput(gf.getFileProtagonista());
 
   this->nome = gf.leggiParola();
+  this->simbolo = '@';
   this->vita = gf.leggiParola().toInt();
   this->denaro = gf.leggiParola().toInt();
   Stringa f_arma_tmp = gf.leggiParola();
@@ -29,6 +30,10 @@ Protagonista::Protagonista(GestoreFile &gf) {
 
 Stringa Protagonista::getNome() {
   return nome;
+}
+
+char Protagonista::getSimbolo() {
+  return simbolo;
 }
 
 int Protagonista::getVita() {
@@ -59,9 +64,26 @@ bool Protagonista::isVersoDestra() {
   return versoDestra;
 }
 
+void Protagonista::setX(int x){
+  this->x = x;
+}
+
+void Protagonista::setY(int y){
+  this->y = y;
+}
+
+void Protagonista::setVersoDestra(bool verso){
+  versoDestra = verso;
+}
+
 // Postcondition: difficoltà del livello iniziale in base alle condizioni
 int Protagonista::getDifficolta() {
   return arma.getCoeff() + vita / 20;
+}
+
+// aumenta la vita al protagonista
+void Protagonista::aumentaVita(int vita){
+  this->vita += vita;
 }
 
 // riduce la vita al protagonista
@@ -124,6 +146,12 @@ void Protagonista::muoviSx(int spost) {
 // sposta il protagonista in alto
 // Precondition: quantità y di cui spostarlo
 void Protagonista::salta(int spost) {
+  y -= spost;
+}
+
+// sposta il protagonista in basso
+// Precondition: quantità y di cui spostarlo
+void Protagonista::muoviGiu(int spost) {
   y += spost;
 }
 
@@ -137,8 +165,7 @@ void Protagonista::resetPosizione() {
 void Protagonista::rigenera() {
   vita = 100;
   punti = 0;
-  x = 1;
-  y = 1;
+  resetPosizione();
 }
 
 // Postcondition: descrizione del protagonista

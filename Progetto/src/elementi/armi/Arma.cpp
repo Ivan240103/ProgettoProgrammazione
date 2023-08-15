@@ -36,6 +36,10 @@ int Arma::getCoeff() {
   return coeff;
 }
 
+void Arma::setDanno(int danno){
+  this->danno+=danno;
+}
+
 // Postcondition: descrizione dell'arma
 Stringa Arma::toString() {
   Stringa tr = nome;

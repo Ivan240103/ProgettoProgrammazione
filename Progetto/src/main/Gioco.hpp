@@ -5,6 +5,8 @@
 #ifndef GIOCO_HPP
 #define GIOCO_HPP
 
+#include <cstdlib>
+#include <ctime>
 #include "Livello.hpp"
 #include "../elementi/personaggi/Scheletro.cpp"
 #include "../elementi/personaggi/Goblin.cpp"
@@ -23,25 +25,28 @@ class Gioco {
   protected:
     // testa della lista bidir dinamica dei livelli
     pliv hlivelli;
-    // puntatore al livello in cui si trova il protagonista
-    pliv attuale;
 
-    void creaLivello(int id = 1);
+    bool cercaIdLivello(int id);
 
-    void aggiungiLivello(Livello livello);
+    void creaLivello();
 
     void setAttuale();
 
     void eliminaSalvataggi(GestoreFile &gf);
 
-    void resetta(int diffPrimoLivello, GestoreFile &gf);
+    void resetta(GestoreFile &gf);
 
     void caricaSalvataggi(GestoreFile &gf);
 
   public:
+    // puntatore al livello in cui si trova il protagonista
+    pliv attuale;
+    
     Gioco();
 
-    Gioco(GestoreFile &gf, bool reset = true, int diffPrimoLivello = 1);
+    Gioco(GestoreFile &gf, bool reset = true);
+
+    void aggiungiLivello(Livello livello);
 
     bool muoviAvanti();
 
@@ -50,15 +55,6 @@ class Gioco {
     void salva(GestoreFile &gf);
 
     void rimuoviNemici();
-
-    // DEBUG: rimuovere quando non servirà più
-    void debug();
-
-    // DEBUG: rimuovere quando non servirà più
-    bool attaccaNemico(int dannoSubito);
-
-    // DEBUG: rimuovere quando non servirà più
-    Nemico getPrimoNemico();
 };
 
 #endif

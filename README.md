@@ -9,13 +9,12 @@ Il protagonista ha lo scopo di uccidere i nemici per guadagnare punti ed avanzar
 - spazio: salto
 - w: attacco
 - e: accesso al negozio
-- q: esci
+- x: esci
 
 ## DEBUG
-Comando per compilare ed eseguire il codice (in VS code almeno):  
-cd "(percorso per arrivare al progetto)/Progetto/src/main/" && g++ Main.cpp Gioco.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp Negozio.cpp Livello.cpp ../elementi/armi/Arma.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp -o Main && "(percorso per arrivare al progetto)/Progetto/src/main/"Main
+Comando per eseguire il main (da eseguire nella cartella "Progetto/src/main"):
 
-**Ivan:** cd "/home/ivan/Documenti/Unibo/ProgettoProgrammazione-ivan/Progetto/src/main/" && g++ Main.cpp Gioco.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp Negozio.cpp Livello.cpp ../elementi/armi/Arma.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp -o Main && "/home/ivan/Documenti/Unibo/ProgettoProgrammazione-ivan/Progetto/src/main/"Main
+g++ -c Gioco.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp Negozio.cpp Livello.cpp ../elementi/armi/Arma.cpp ../elementi/potenziamenti/Potenziamento.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp GUI.cpp -c Main.cpp && g++ Arma.o Potenziamento.o GestoreFile.o Gioco.o GUI.o Livello.o Negozio.o Nemico.o Protagonista.o Stringa.o Main.o -o Main -lncurses && ./Main && rm *.o
 
 In alcuni file sono presenti delle righe di codice con l'etichetta *DEBUG:*, sono parti che andranno rimosse a progetto concluso in quanto servivano per testare il codice da riga di comando senza la grafica
 
