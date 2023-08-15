@@ -9,12 +9,12 @@ Il protagonista ha lo scopo di uccidere i nemici per guadagnare punti ed avanzar
 - spazio: salto
 - w: attacco
 - e: accesso al negozio
-- q: esci
+- x: esci
 
 ## DEBUG
 Comando nuovo per eseguire il main:
 
-g++ -c Gioco.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp Negozio.cpp Livello.cpp ../elementi/armi/Arma.cpp ../elementi/potenziamenti/Potenziamento.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp GUI.cpp -c Main.cpp && g++ Arma.o Potenziamento.o GestoreFile.o Gioco.o GUI.o Livello.o Negozio.o Nemico.o Protagonista.o Stringa.o Main.o -o Main -lncurses && ./Main
+g++ -c Gioco.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp Negozio.cpp Livello.cpp ../elementi/armi/Arma.cpp ../elementi/potenziamenti/Potenziamento.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp GUI.cpp -c Main.cpp && g++ Arma.o Potenziamento.o GestoreFile.o Gioco.o GUI.o Livello.o Negozio.o Nemico.o Protagonista.o Stringa.o Main.o -o Main -lncurses && ./Main && rm *.o
 
 Comando per compilare ed eseguire il codice (in VS code almeno):  
 cd "/home/master/Scrivania/ProgettoCompleto/ProgettoProgrammazione-tambo/Progetto/src/main/" && g++ Main.cpp Gioco.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp Negozio.cpp Livello.cpp GUI.cpp  ../elementi/armi/Arma.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp -o Main && "/home/master/Scrivania/ProgettoCompleto/ProgettoProgrammazione-tambo/Progetto/src/main/"Main 

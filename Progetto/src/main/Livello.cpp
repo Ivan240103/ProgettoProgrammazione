@@ -1,6 +1,4 @@
 #include "Livello.hpp"
-// DEBUG: rimuovere quando non servirà più
-#include <iostream>
 
 // rimuove il nemico in testa alla lista
 void Livello::rimuoviTesta() {
@@ -36,12 +34,27 @@ void Livello::protagonistaAddios() {
   attuale = false;
 }
 
-// aggiunge un nemico al livello
-void Livello::inserisciNemico(Nemico n) {
+// aggiunge un nemico al livello in testa
+void Livello::inserisciNemicoTesta(Nemico n) {
   pnodo tmp = new nodo;
   tmp->nem = n;
   tmp->succ = hnemici;
   hnemici = tmp;
+}
+
+// aggiunge un nemico al livello in coda
+void Livello::inserisciNemicoCoda(Nemico n) {
+  if (hnemici == NULL) {
+    inserisciNemicoTesta(n);
+  } else {
+    pnodo mv = hnemici;
+    while (mv->succ != NULL) {
+      mv = mv->succ;
+    }
+    pnodo tmp = new nodo;
+    tmp->nem = n;
+    mv->succ = tmp;
+  }
 }
 
 // rimuove tutti i nemici con 0 di vita
@@ -88,23 +101,4 @@ void Livello::salva(GestoreFile &gf) {
     gf.scrivi(mv->nem.getData());
     mv = mv->succ;
   }
-}
-
-void Livello::debug() {
-  cout<<"id: "<<id<<endl;
-  cout<<"attuale: "<<attuale<<endl;
-  pnodo mv = hnemici;
-  while (mv != NULL) {
-    cout<<mv->nem.toString().s;
-    mv = mv->succ;
-  }
-  cout<<"-------"<<endl;
-}
-
-Nemico Livello::getPrimoNemico() {
-  return hnemici->nem;
-}
-
-bool Livello::attaccaNemico(int dannoSubito) {
-  return hnemici->nem.prendiDanno(dannoSubito);
 }

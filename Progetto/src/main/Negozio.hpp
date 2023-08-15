@@ -12,7 +12,6 @@
 #include "../elementi/armi/Spada.cpp"
 #include "../elementi/armi/PallaChiodata.cpp"
 #include "../elementi/armi/Arco.cpp"
-#include "../elementi/potenziamenti/Potenziamento.hpp"
 #include "../elementi/potenziamenti/UltraDanno.cpp"
 #include "../elementi/personaggi/Protagonista.hpp"
 #include "../util/GestoreFile.hpp"
@@ -29,7 +28,6 @@ class Negozio {
     };
 
   public:
-
     Negozio(Protagonista pr);
     Spada s = Spada();
     PallaChiodata p = PallaChiodata();
