@@ -12,14 +12,9 @@ Il protagonista ha lo scopo di uccidere i nemici per guadagnare punti ed avanzar
 - x: esci
 
 ## DEBUG
-Comando nuovo per eseguire il main:
+Comando per eseguire il main (da eseguire nella cartella "Progetto/src/main"):
 
 g++ -c Gioco.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp Negozio.cpp Livello.cpp ../elementi/armi/Arma.cpp ../elementi/potenziamenti/Potenziamento.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp GUI.cpp -c Main.cpp && g++ Arma.o Potenziamento.o GestoreFile.o Gioco.o GUI.o Livello.o Negozio.o Nemico.o Protagonista.o Stringa.o Main.o -o Main -lncurses && ./Main && rm *.o
-
-Comando per compilare ed eseguire il codice (in VS code almeno):  
-cd "/home/master/Scrivania/ProgettoCompleto/ProgettoProgrammazione-tambo/Progetto/src/main/" && g++ Main.cpp Gioco.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp Negozio.cpp Livello.cpp GUI.cpp  ../elementi/armi/Arma.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp -o Main && "/home/master/Scrivania/ProgettoCompleto/ProgettoProgrammazione-tambo/Progetto/src/main/"Main 
-
-**Ivan:** cd "/home/ivan/Documenti/Unibo/ProgettoProgrammazione-ivan/Progetto/src/main/" && g++ Main.cpp Gioco.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp Negozio.cpp Livello.cpp ../elementi/armi/Arma.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp -o Main && "/home/ivan/Documenti/Unibo/ProgettoProgrammazione-ivan/Progetto/src/main/"Main
 
 In alcuni file sono presenti delle righe di codice con l'etichetta *DEBUG:*, sono parti che andranno rimosse a progetto concluso in quanto servivano per testare il codice da riga di comando senza la grafica
 
