@@ -375,19 +375,19 @@ void Negozio::vitaNegozio(WINDOW* negozio, int &scelta){
   if(scelta==10){
   if(contatore==4){
     if(pr.spendi(200)){
-      pr.setVita(25);
+      pr.aumentaVita(25);
     }else{
       mvwprintw(negozio, 17,40,"NON HAI ABBASTANZA SOLDI");
     }
   } else if(contatore==5){
     if(pr.spendi(350)){
-      pr.setVita(50);
+      pr.aumentaVita(50);
     }else{
       mvwprintw(negozio, 17,40,"NON HAI ABBASTANZA SOLDI");
     }
   }else if(contatore==6){
     if(pr.spendi(650)){
-      pr.setVita(100);
+      pr.aumentaVita(100);
     }else{
       mvwprintw(negozio, 17,40,"NON HAI ABBASTANZA SOLDI");
     }

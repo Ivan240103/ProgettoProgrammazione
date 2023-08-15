@@ -17,6 +17,8 @@ class Protagonista {
   protected:
     // nome del protagonista
     Stringa nome;
+    // simbolo del protagonista
+    char simbolo;
     // vita residua
     int vita;
     // denaro disponibile
@@ -35,6 +37,8 @@ class Protagonista {
 
     Stringa getNome();
 
+    char getSimbolo();
+
     int getVita();
 
     int getDenaro();
@@ -47,17 +51,18 @@ class Protagonista {
 
     int getY();
 
-    void setY(int y);
+    bool isVersoDestra();
     
     void setX(int x);
 
-    void setVita(int vita);
-
-    bool isVersoDestra();
+    void setY(int y);
 
     void setVersoDestra(bool verso);
 
+    // INUTILIZZATO (?)
     int getDifficolta();
+
+    void aumentaVita(int vita);
 
     bool prendiDanno(int danno);
 

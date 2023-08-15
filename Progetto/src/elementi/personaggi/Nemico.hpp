@@ -7,7 +7,6 @@
 #ifndef NEMICO_HPP
 #define NEMICO_HPP
 
-#include <ncurses.h>
 #include <cstdlib>
 #include <ctime>
 #include "../../util/Stringa.hpp"
@@ -17,41 +16,39 @@ class Nemico {
   protected:
     // nome del nemico
     Stringa nome;
-    //Simbolo del personaaggio
+    // simbolo del personaaggio a schermo
     char simbolo;
     // vita residua
     int vita;
     // danno causabile
     int danno;
     // se è true il nemico può colpire a distanza
+    // INUTILE (?)
     bool distanza;
     // denaro dato al protagonista dopo l'uccisione
     int ricompensa;
     // coordinate (x,y) della posizione a schermo
     int x, y;
-    //variabile per vedere se la edstra o la sinistra è libera
+    // variabile per vedere se la destra o la sinistra è libera
     bool sx;
+
   public:
     Nemico(
       Stringa nome,
-      char simbolo = ' ',
+      char simbolo = '?',
       int vita = 10,
       int minDanno = 1,
       int maxDanno = 1,
       bool distanza = false,
       int ricompensa = 20,
-      int x=1 ,
-      int y=1,
-      bool sx=true
+      int x = 1 ,
+      int y = 1,
+      bool sx = true
     );
 
     Stringa getNome();
 
     char getSimbolo();
-
-    bool getSx();
-
-    void setSx(bool valore);
 
     int getVita();
 
@@ -63,15 +60,19 @@ class Nemico {
 
     int getX();
 
+    int getY();
+
+    bool getSx();
+
     void setX(int x);
 
     void setY(int y);
 
-    void MuoviSuGiu(int sposta);
-
-    int getY();
+    void setSx(bool valore);
 
     bool prendiDanno(int danno);
+
+    void MuoviSuGiu(int sposta);
 
     void muoviDx(int spost = 1);
 

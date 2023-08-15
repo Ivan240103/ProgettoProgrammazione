@@ -19,7 +19,7 @@ class Livello {
   typedef nodo* pnodo;
   
   protected:
-    // identificativo del livello (difficoltà)
+    // identificativo del livello
     int id;
     // true se c'è il protagonista nel livello
     bool attuale;
@@ -27,7 +27,7 @@ class Livello {
     void rimuoviTesta();
 
   public:
-    Livello(int id=1, bool attuale = false);
+    Livello(int id = 1, bool attuale = false);
 
     // testa della lista dinamica dei nemici
     pnodo hnemici;
@@ -42,22 +42,15 @@ class Livello {
 
     void protagonistaAddios();
 
-    void inserisciNemico(Nemico n);
+    void inserisciNemicoTesta(Nemico n);
+    
+    void inserisciNemicoCoda(Nemico n);
 
     void rimuoviNemici();
 
     bool isTerminato();
 
     void salva(GestoreFile &gf);
-
-    // DEBUG: rimuovere quando non servirà più
-    void debug();
-    
-    // DEBUG: rimuovere quando non servirà più
-    Nemico getPrimoNemico();
-    
-    // DEBUG: rimuovere quando non servirà più
-    bool attaccaNemico(int dannoSubito);
 };
 
 #endif

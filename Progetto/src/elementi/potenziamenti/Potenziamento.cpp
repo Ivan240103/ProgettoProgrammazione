@@ -7,17 +7,16 @@ Potenziamento::Potenziamento(Stringa nome, int costo, int durata) {
   this->durata = durata;
 }
 
-//Metodo che restituisce il nome del potenziamento
+// GETTERS
+
 Stringa Potenziamento::getNome(){
   return nome;
 }
 
-//Metodo che restituisce il costo
 int Potenziamento::getCosto(){
   return costo;
 }
 
-//Metodo che restisuisce la durata
 int Potenziamento::getDurata(){
   return durata;
 }

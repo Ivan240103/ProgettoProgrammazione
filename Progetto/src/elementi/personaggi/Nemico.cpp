@@ -2,7 +2,6 @@
 
 // costruttore
 Nemico::Nemico(Stringa nome, char simbolo, int vita, int minDanno, int maxDanno, bool distanza, int ricompensa, int x, int y, bool sx) {
-  this->sx=sx;
   this->nome = nome;
   this->simbolo = simbolo;
   this->vita = vita;
@@ -12,6 +11,7 @@ Nemico::Nemico(Stringa nome, char simbolo, int vita, int minDanno, int maxDanno,
   this->ricompensa = ricompensa;
   this->x = x;
   this->y = y;
+  this->sx = sx;
 }
 
 // GETTERS
@@ -22,14 +22,6 @@ Stringa Nemico::getNome() {
 
 char Nemico::getSimbolo() {
   return simbolo;
-}
-
-bool Nemico::getSx(){
-  return sx;
-}
-
-void Nemico::setSx(bool valore){
-  this->sx = valore;
 }
 
 int Nemico::getVita() {
@@ -52,20 +44,24 @@ int Nemico::getX() {
   return x;
 }
 
-void Nemico::setX(int x){
-  this->x= x;
-}
-
 int Nemico::getY() {
   return y;
 }
 
-void Nemico::setY(int y){
-  this->y= y;
+bool Nemico::getSx(){
+  return sx;
 }
 
-void Nemico::MuoviSuGiu(int sposta){
-  this->y+=sposta;
+void Nemico::setX(int x){
+  this->x = x;
+}
+
+void Nemico::setY(int y){
+  this->y = y;
+}
+
+void Nemico::setSx(bool valore){
+  this->sx = valore;
 }
 
 // riduce la vita al nemico
@@ -78,6 +74,10 @@ bool Nemico::prendiDanno(int danno) {
   } else {
     return true;
   }
+}
+
+void Nemico::MuoviSuGiu(int sposta){
+  this->y += sposta;
 }
 
 // Precondition: quantità x di cui spostarlo
@@ -137,7 +137,6 @@ Stringa Nemico::getData() {
   ts.concat(y);
   ts.concat(',');
   ts.concat(sx);
-  ts.concat(',');
   ts.concat('\n');
   return ts;
 }

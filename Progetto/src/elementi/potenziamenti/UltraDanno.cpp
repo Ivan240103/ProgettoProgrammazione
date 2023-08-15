@@ -1,6 +1,6 @@
 /*
- classe Ultradanno
- il danno del protagonista oneshotta i nemici
+ Classe UltraDanno
+ Quando attivo, il protagonista uccide i nemici in un colpo solo
 */
 
 #ifndef ULTRADANNO_CPP
