@@ -1,6 +1,6 @@
 /*
  Arma PallaChiodata
- Colpisce tutte le caselle intorno al protagonista
+ Colpisce tutte le caselle adiacenti al protagonista
 */
 
 #ifndef PALLACHIODATA_CPP
@@ -13,7 +13,7 @@ class PallaChiodata : public Arma {
 
   public:
     // costruttore
-    PallaChiodata() : Arma(Stringa((char*) "PallaChiodata"), 12, 750, false, true, 4) {}
+    PallaChiodata() : Arma(Stringa((char*) "PallaChiodata"), 12, 750) {}
 };
 
 #endif

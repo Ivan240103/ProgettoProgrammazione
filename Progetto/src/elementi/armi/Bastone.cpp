@@ -13,7 +13,7 @@ class Bastone : public Arma {
 
   public:
     // costruttore
-    Bastone() : Arma(Stringa((char*) "Bastone"), 5, 0, false, false, 1) {}
+    Bastone() : Arma(Stringa((char*) "Bastone"), 5, 0) {}
 };
 
 #endif

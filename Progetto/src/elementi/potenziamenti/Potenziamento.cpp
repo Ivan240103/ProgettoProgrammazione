@@ -20,3 +20,9 @@ int Potenziamento::getCosto(){
 int Potenziamento::getDurata(){
   return durata;
 }
+
+void Potenziamento::riduciDurata() {
+  if (durata > 0) {
+    durata--;
+  }
+}

@@ -9,6 +9,8 @@
 #include "../armi/Spada.cpp"
 #include "../armi/PallaChiodata.cpp"
 #include "../armi/Arco.cpp"
+#include "../potenziamenti/UltraDanno.cpp"
+#include "../potenziamenti/SuperScudo.cpp"
 #include "../../util/Stringa.hpp"
 #include "../../util/GestoreFile.hpp"
 
@@ -24,7 +26,9 @@ class Protagonista {
     // denaro disponibile
     int denaro;
     // arma equipaggiata
-    Arma arma = Arma(Stringa((char*) "tmp"));
+    Arma arma = Arma();
+    // durata residua del potenziamento
+    Potenziamento potenziamento = Potenziamento(Stringa((char*) "tmp"));
     // punti ottenuti
     int punti;
     // coordinate (x, y) della posizione a schermo
@@ -33,6 +37,8 @@ class Protagonista {
     bool versoDestra;
   
   public:
+    Protagonista();
+
     Protagonista(GestoreFile &gf);
 
     Stringa getNome();
@@ -44,6 +50,8 @@ class Protagonista {
     int getDenaro();
 
     Arma getArma();
+
+    Potenziamento getPotenziamento();
 
     int getPunti();
 
@@ -59,9 +67,6 @@ class Protagonista {
 
     void setVersoDestra(bool verso);
 
-    // INUTILIZZATO (?)
-    int getDifficolta();
-
     void aumentaVita(int vita);
 
     bool prendiDanno(int danno);
@@ -73,6 +78,10 @@ class Protagonista {
     bool spendi(int soldi);
 
     void cambiaArma(Arma a);
+
+    void cambiaPotenziamento(Potenziamento p);
+
+    void riduciDurataPot();
 
     void aggiungiPunti(int p);
 
@@ -87,9 +96,6 @@ class Protagonista {
     void resetPosizione();
 
     void rigenera();
-
-    // DEBUG: rimuovere quando non servirà più
-    Stringa toString();
 
     void salva(GestoreFile &gf);
 };

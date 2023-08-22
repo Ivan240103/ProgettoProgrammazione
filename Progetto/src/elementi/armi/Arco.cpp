@@ -13,7 +13,7 @@ class Arco : public Arma {
 
   public:
     // costruttore
-    Arco() : Arma(Stringa((char*) "Arco"), 10, 1000, true, false, 5) {}
+    Arco() : Arma(Stringa((char*) "Arco"), 10, 1000) {}
 };
 
 #endif

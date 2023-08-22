@@ -1,6 +1,6 @@
 /*
  Arma Spada
- Causa più danni del bastone
+ Colpisce le due caselle adiacenti orizzontalmente
 */
 
 #ifndef SPADA_CPP
@@ -13,7 +13,7 @@ class Spada : public Arma {
   
   public:
     // costruttore
-    Spada() : Arma(Stringa((char*) "Spada"), 15, 300, false, false, 3) {}
+    Spada() : Arma(Stringa((char*) "Spada"), 15, 300) {}
 };
 
 #endif

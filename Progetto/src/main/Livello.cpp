@@ -34,25 +34,18 @@ void Livello::protagonistaAddios() {
   attuale = false;
 }
 
-// aggiunge un nemico al livello in testa
-void Livello::inserisciNemicoTesta(Nemico n) {
+// aggiunge un nemico al livello in coda
+void Livello::inserisciNemico(Nemico n) {
   pnodo tmp = new nodo;
   tmp->nem = n;
-  tmp->succ = hnemici;
-  hnemici = tmp;
-}
-
-// aggiunge un nemico al livello in coda
-void Livello::inserisciNemicoCoda(Nemico n) {
   if (hnemici == NULL) {
-    inserisciNemicoTesta(n);
+    tmp->succ = hnemici;
+    hnemici = tmp;
   } else {
     pnodo mv = hnemici;
     while (mv->succ != NULL) {
       mv = mv->succ;
     }
-    pnodo tmp = new nodo;
-    tmp->nem = n;
     mv->succ = tmp;
   }
 }

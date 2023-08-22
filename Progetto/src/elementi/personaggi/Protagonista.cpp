@@ -1,5 +1,8 @@
 #include "Protagonista.hpp"
 
+// costruttore default
+Protagonista::Protagonista() {}
+
 // costruttore
 Protagonista::Protagonista(GestoreFile &gf) {
   gf.apriInput(gf.getFileProtagonista());
@@ -17,6 +20,15 @@ Protagonista::Protagonista(GestoreFile &gf) {
     this->arma = Arco();
   } else {
     this->arma = Bastone();
+  }
+  Stringa f_pot = gf.leggiParola();
+  int f_durataPot = gf.leggiParola().toInt();
+  if (f_pot.compareTo(Stringa((char*) "UltraDanno")) == 0) {
+    this->potenziamento = UltraDanno(f_durataPot);
+  } else if (f_pot.compareTo(Stringa((char*) "SuperScudo")) == 0) {
+    this->potenziamento = SuperScudo(f_durataPot);
+  } else {
+    this->potenziamento = Potenziamento(f_pot);
   }
   this->punti = gf.leggiParola().toInt();
   this->x = gf.leggiParola().toInt();
@@ -48,6 +60,10 @@ Arma Protagonista::getArma() {
   return arma;
 }
 
+Potenziamento Protagonista::getPotenziamento() {
+  return potenziamento;
+}
+
 int Protagonista::getPunti() {
   return punti;
 }
@@ -76,11 +92,6 @@ void Protagonista::setVersoDestra(bool verso){
   versoDestra = verso;
 }
 
-// Postcondition: difficoltà del livello iniziale in base alle condizioni
-int Protagonista::getDifficolta() {
-  return arma.getCoeff() + vita / 20;
-}
-
 // aumenta la vita al protagonista
 void Protagonista::aumentaVita(int vita){
   this->vita += vita;
@@ -89,18 +100,26 @@ void Protagonista::aumentaVita(int vita){
 // riduce la vita al protagonista
 // Postcondition: true se è ancora vivo, false se è morto
 bool Protagonista::prendiDanno(int danno) {
-  vita -= danno;
-  if (vita <= 0) {
-    vita = 0;
-    return false;
-  } else {
+  if (potenziamento.getNome().compareTo(Stringa((char*) "SuperScudo")) == 0 && potenziamento.getDurata() > 0) {
     return true;
+  } else {
+    vita -= danno;
+    if (vita <= 0) {
+      vita = 0;
+      return false;
+    } else {
+      return true;
+    }
   }
 }
 
 // Postcondition: danno causabile dal protagonista
 int Protagonista::infliggiDanno() {
-  return arma.getDanno();
+  if (potenziamento.getNome().compareTo(Stringa((char*) "UltraDanno")) == 0 && potenziamento.getDurata() > 0) {
+    return 1000;
+  } else {
+    return arma.getDanno();
+  }
 }
 
 // incrementa il denaro
@@ -122,6 +141,16 @@ bool Protagonista::spendi(int soldi) {
 // sostituisce l'arma in dotazione
 void Protagonista::cambiaArma(Arma a) {
   arma = a;
+}
+
+// sostituisce il potenziamento attivo
+void Protagonista::cambiaPotenziamento(Potenziamento p) {
+  potenziamento = p;
+}
+
+// riduce la durata del potenziamento di uno
+void Protagonista::riduciDurataPot() {
+  potenziamento.riduciDurata();
 }
 
 // incrementa i punti
@@ -157,8 +186,8 @@ void Protagonista::muoviGiu(int spost) {
 
 // riporta il protagonista nella posizione iniziale
 void Protagonista::resetPosizione() {
-  x = 1;
-  y = 1;
+  x = 3;
+  y = 3;
 }
 
 // rigenera il protagonista dopo la morte
@@ -166,30 +195,6 @@ void Protagonista::rigenera() {
   vita = 100;
   punti = 0;
   resetPosizione();
-}
-
-// Postcondition: descrizione del protagonista
-Stringa Protagonista::toString() {
-  Stringa tr = nome;
-  tr.concat(Stringa((char*) " - Vita: "));
-  tr.concat(vita);
-  tr.concat(Stringa((char*) ", Denaro: "));
-  tr.concat(denaro);
-  tr.concat(Stringa((char*) ", Arma: "));
-  tr.concat(arma.getNome());
-  tr.concat(Stringa((char*) ", Punti: "));
-  tr.concat(punti);
-  tr.concat(Stringa((char*) ", ("));
-  tr.concat(x);
-  tr.concat(',');
-  tr.concat(y);
-  tr.concat(')');
-  if (versoDestra) {
-    tr.concat(Stringa((char*) ", VersoDestra: true\n"));
-  } else {
-    tr.concat(Stringa((char*) ", VersoDestra: false\n"));
-  }
-  return tr;
 }
 
 // salva il protagonista su file
@@ -201,6 +206,10 @@ void Protagonista::salva(GestoreFile &gf) {
   ts.concat(denaro);
   ts.concat(',');
   ts.concat(arma.getNome());
+  ts.concat(',');
+  ts.concat(potenziamento.getNome());
+  ts.concat(',');
+  ts.concat(potenziamento.getDurata());
   ts.concat(',');
   ts.concat(punti);
   ts.concat(',');

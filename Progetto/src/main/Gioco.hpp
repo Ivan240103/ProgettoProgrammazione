@@ -6,7 +6,6 @@
 #define GIOCO_HPP
 
 #include <cstdlib>
-#include <ctime>
 #include "Livello.hpp"
 #include "../elementi/personaggi/Scheletro.cpp"
 #include "../elementi/personaggi/Goblin.cpp"
