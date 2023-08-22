@@ -14,7 +14,8 @@ class Freccia : public Nemico {
 
   public:
     // costruttore
-    Freccia(int x = 1, int y = 1, char simbolo = '-', bool sx = true) : Nemico(Stringa((char*) "Freccia"), simbolo, 1, 4, 6, false, 10, x, y, sx) {}
+    Freccia(char simbolo = '-', int danno = 4, int x = 1, int y = 1, bool sx = true) 
+      : Nemico(Stringa((char*) "Freccia"), simbolo, 1, danno, danno, 0, x, y, sx) {}
 };
 
 #endif

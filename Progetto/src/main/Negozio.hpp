@@ -8,57 +8,52 @@
 #define NEGOZIO_HPP
 
 #include <ncurses.h>
-#include "../elementi/armi/Arma.hpp"
 #include "../elementi/armi/Spada.cpp"
 #include "../elementi/armi/PallaChiodata.cpp"
 #include "../elementi/armi/Arco.cpp"
 #include "../elementi/potenziamenti/UltraDanno.cpp"
+#include "../elementi/potenziamenti/SuperScudo.cpp"
 #include "../elementi/personaggi/Protagonista.hpp"
-#include "../util/GestoreFile.hpp"
-
-const int NUM_ARMI = 3;
 
 class Negozio {
   
   protected:
-    Arma armi[NUM_ARMI] = {
-      Spada(),
-      PallaChiodata(),
-      Arco()
-    };
-
-  public:
-    Negozio(Protagonista pr);
+    // puntatore al protagonista
+    Protagonista* pr;
     Spada s = Spada();
     PallaChiodata p = PallaChiodata();
     Arco a = Arco();
-    UltraDanno u = UltraDanno();
-    GestoreFile gf = GestoreFile();
-    Protagonista pr = Protagonista(gf);
+    UltraDanno u1 = UltraDanno(1);
+    UltraDanno u3 = UltraDanno(3);
+    SuperScudo ss1 = SuperScudo(1);
+    SuperScudo ss3 = SuperScudo(3);
 
-    void stampaNegozio(WINDOW* negozio);
+    void stampaInfo(WINDOW* finestra);
+
+    void stampaNegozio(int standout, WINDOW* finestra);
     
-    void stampaArmi(WINDOW* negozio);
+    void stampaArmi(int standout, WINDOW* finestra);
 
-    void armiNegozio(WINDOW* negozio, int &scelta);
+    void stampaPotenziamenti(int standout, WINDOW* finestra);
 
-    void stampaPotenziamenti(WINDOW* negozio);
+    void stampaVita(int standout, WINDOW* finestra);
 
-    void potenziamentiNegozio(WINDOW* negozio, int &scelta);
+    void caratteristiche(int articolo, WINDOW* finestra);
 
-    void vitaNegozio(WINDOW* negozio, int &scelta);
+    bool armiNegozio(WINDOW* finestra, int &scelta);
 
-    void stampaVita(WINDOW* negozio);
+    bool potenziamentiNegozio(WINDOW* finestra, int &scelta);
 
-    void caratteristiche(int scelta, WINDOW* negozio);
+    bool vitaNegozio(WINDOW* finestra, int &scelta);
+
+    void cancellaMenu(WINDOW* finestra);
+
+  public:
+    Negozio();
+
+    Negozio(Protagonista* pr);
 
     void creaNegozio();
-
-    void cancellaMenu(WINDOW* negozio);
-
-    Arma vendiArma(int position);
-
-    Stringa mostraArticoli();
 };
 
 #endif

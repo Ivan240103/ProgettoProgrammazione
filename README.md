@@ -8,7 +8,7 @@ Il protagonista ha lo scopo di uccidere i nemici per guadagnare punti ed avanzar
 - d: spostamento a destra
 - spazio: salto
 - w: attacco
-- e: accesso al negozio
+- e: apri/chiudi negozio
 - x: esci
 
 ## DEBUG

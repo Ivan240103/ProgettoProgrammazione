@@ -15,8 +15,6 @@ class Livello {
     Nemico nem = Nemico(Stringa((char*) "tmp"));
     nodo* succ = NULL;
   };
-
-  typedef nodo* pnodo;
   
   protected:
     // identificativo del livello
@@ -27,12 +25,12 @@ class Livello {
     void rimuoviTesta();
 
   public:
-    Livello(int id = 1, bool attuale = false);
+    typedef nodo* pnodo;
 
     // testa della lista dinamica dei nemici
     pnodo hnemici;
 
-    pnodo appoggio;
+    Livello(int id = 1, bool attuale = false);
 
     int getId();
 
@@ -41,10 +39,8 @@ class Livello {
     void protagonistaArriva();
 
     void protagonistaAddios();
-
-    void inserisciNemicoTesta(Nemico n);
     
-    void inserisciNemicoCoda(Nemico n);
+    void inserisciNemico(Nemico n);
 
     void rimuoviNemici();
 

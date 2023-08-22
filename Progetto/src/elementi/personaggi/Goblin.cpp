@@ -13,7 +13,7 @@ class Goblin : public Nemico {
 
   public:
     // costruttore
-    Goblin(int x = 1, int y = 1) : Nemico(Stringa((char*) "Goblin"), 'S', 10, 2, 4, false, 10, x, y, true) {}
+    Goblin(int x = 1, int y = 1) : Nemico(Stringa((char*) "Goblin"), 'S', 10, 2, 4, 15, x, y, true) {}
 };
 
 #endif

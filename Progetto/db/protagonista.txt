@@ -1,1 +1,1 @@
-Cosimo,438,3110,Spada,0,7,18,1
+Gigio,12,845,PallaChiodata,UltraDanno,0,2035,19,18,0

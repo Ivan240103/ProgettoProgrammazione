@@ -9,6 +9,7 @@ Classe per gestire la grafica del gioco
 #include <unistd.h>
 #include <cstdlib>
 #include <ctime>
+#include <cstring>
 #include "Gioco.hpp"
 #include "Livello.hpp"
 #include "Negozio.hpp"
@@ -19,7 +20,6 @@ Classe per gestire la grafica del gioco
 #include "../elementi/personaggi/Freccia.cpp"
 #include "../elementi/personaggi/Guardia.cpp"
 #include "../util/GestoreFile.hpp"
-#include "../util/Stringa.hpp"
 
 class GUI{
 
@@ -34,7 +34,6 @@ class GUI{
         GestoreFile gf = GestoreFile();
         Protagonista p = Protagonista(gf);
         Gioco game;
-        Negozio n = Negozio(p);
 
         void creaMappa(int det, int mv, WINDOW* win, bool nuovo = false);
 

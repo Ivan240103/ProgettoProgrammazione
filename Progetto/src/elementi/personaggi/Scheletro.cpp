@@ -13,7 +13,7 @@ class Scheletro : public Nemico {
 
   public:
     // costruttore
-    Scheletro(int x = 1, int y = 1) : Nemico(Stringa((char*) "Scheletro"), '{', 20, 4, 6, true, 30, x, y, true) {}
+    Scheletro(int x = 1, int y = 1) : Nemico(Stringa((char*) "Scheletro"), '{', 20, 4, 6, 30, x, y, true) {}
 };
 
 #endif

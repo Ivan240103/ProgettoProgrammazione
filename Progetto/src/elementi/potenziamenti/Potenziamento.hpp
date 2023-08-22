@@ -18,17 +18,15 @@ class Potenziamento {
     int durata;
 
   public:
-    Potenziamento(
-      Stringa nome, 
-      int costo = 150, 
-      int durata = 3
-    );
+    Potenziamento(Stringa nome, int costo = 0, int durata = 0);
 
     Stringa getNome();
 
     int getCosto();
 
     int getDurata();
+
+    void riduciDurata();
 };
 
 #endif

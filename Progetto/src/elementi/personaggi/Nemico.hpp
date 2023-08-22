@@ -8,7 +8,6 @@
 #define NEMICO_HPP
 
 #include <cstdlib>
-#include <ctime>
 #include "../../util/Stringa.hpp"
 
 class Nemico {
@@ -22,9 +21,6 @@ class Nemico {
     int vita;
     // danno causabile
     int danno;
-    // se è true il nemico può colpire a distanza
-    // INUTILE (?)
-    bool distanza;
     // denaro dato al protagonista dopo l'uccisione
     int ricompensa;
     // coordinate (x,y) della posizione a schermo
@@ -39,7 +35,6 @@ class Nemico {
       int vita = 10,
       int minDanno = 1,
       int maxDanno = 1,
-      bool distanza = false,
       int ricompensa = 20,
       int x = 1 ,
       int y = 1,
@@ -53,8 +48,6 @@ class Nemico {
     int getVita();
 
     int getDanno();
-
-    bool isDistanza();
 
     int getRicompensa();
 
@@ -77,9 +70,6 @@ class Nemico {
     void muoviDx(int spost = 1);
 
     void muoviSx(int spost = 1);
-
-    // DEBUG: rimuovere quando non servirà più
-    Stringa toString();
 
     Stringa getData();
 };

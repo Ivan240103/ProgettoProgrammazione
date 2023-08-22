@@ -8,6 +8,9 @@ void GUI::creaMappa(int det, int mv, WINDOW* win, bool nuovo){
         case 0:
             mvwprintw(win, 19, mv, "==========");
             mvwprintw(win, 20, mv, "==========");
+            if (nuovo) {
+                creaNemico(win, 18, mv+4, v);
+            }
             break;
         case 1:
             mvwprintw(win, 18, mv, "  ===     ");
@@ -59,7 +62,7 @@ void GUI::creaMappa(int det, int mv, WINDOW* win, bool nuovo){
 			mvwprintw(win, 19, mv, "==========");
             mvwprintw(win, 20, mv, "==========");
             if (nuovo) {
-                creaNemico(win, 18, mv+8, v);
+                creaNemico(win, 18, mv+7, v);
             }
             break;
         case 7:
@@ -86,7 +89,7 @@ void GUI::creaMappa(int det, int mv, WINDOW* win, bool nuovo){
             mvwprintw(win, 19, mv, "==========");
             mvwprintw(win, 20, mv, "==========");
             if (nuovo) {
-                creaNemico(win, 17, mv+3, v);
+                creaNemico(win, 18, mv+3, v);
             }
             break;
     }
@@ -95,13 +98,14 @@ void GUI::creaMappa(int det, int mv, WINDOW* win, bool nuovo){
 //Metodo che stampa la mappa relativa al livello
 // Precondition: nuovo = true se bisogna creare i nemici (livello nuovo)
 void GUI::stampaMappa(WINDOW* win, bool nuovo){
-    //TODO: controllare gestione dei livelli (numero e forza dei nemici...)
+    //TODO: controllare gestione forza dei nemici
+    int id = game.attuale->l.getId();
     creaMappa(0,1, win, nuovo);
-    creaMappa((game.attuale->l.getId()*7)%9 ,11, win, nuovo);
-    creaMappa((game.attuale->l.getId()*5)%9 ,21, win, nuovo);
-    creaMappa((game.attuale->l.getId()*6)%9 ,31, win, nuovo);
-    creaMappa((game.attuale->l.getId()*8)%9 ,41, win, nuovo);
-    creaMappa((game.attuale->l.getId()*3)%9 ,51, win, nuovo);
+    creaMappa((id*7)%8 + 1 ,11, win, nuovo);
+    creaMappa((id*5)%9 ,21, win, nuovo);
+    creaMappa((id+6)%9 ,31, win, nuovo);
+    creaMappa((id*8)%9 ,41, win, nuovo);
+    creaMappa((id+3)%9 ,51, win, nuovo);
     creaMappa(0,61, win, nuovo);
     stampaNemici(win);
 }
@@ -120,17 +124,17 @@ void GUI::creaNemico(WINDOW* win, int y, int x, int random){
     switch(random){
         case 0:
             gob = Goblin(x,y);
-            game.attuale->l.inserisciNemicoTesta(gob);
+            game.attuale->l.inserisciNemico(gob);
             break;
         case 1:
             schel = Scheletro(x,y);
-            f = Freccia(x-1,y);
-            game.attuale->l.inserisciNemicoTesta(f);
-            game.attuale->l.inserisciNemicoTesta(schel);
+            game.attuale->l.inserisciNemico(schel);
+            f = Freccia('-', schel.getDanno(), x-1, y);
+            game.attuale->l.inserisciNemico(f);
             break;
         case 2:
             gua = Guardia(x,y);
-            game.attuale->l.inserisciNemicoTesta(gua);
+            game.attuale->l.inserisciNemico(gua);
             break;
     }
 }
@@ -138,18 +142,17 @@ void GUI::creaNemico(WINDOW* win, int y, int x, int random){
 // stampa tutti i nemici del livello
 void GUI::stampaNemici(WINDOW* finestra) {
     Nemico nem = Nemico(Stringa((char*) "tmp"));
-    game.attuale->l.appoggio = game.attuale->l.hnemici;
-    while (game.attuale->l.appoggio != NULL) {
-        nem = game.attuale->l.appoggio->nem;
-        mvwaddch(finestra, nem.getY(), nem.getX(), nem.getSimbolo());
-        game.attuale->l.appoggio = game.attuale->l.appoggio->succ;
+    Livello::pnodo mv = game.attuale->l.hnemici;
+    while (mv != NULL) {
+        mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
+        mv = mv->succ;
     }
 }
 
 //Metodo per gestire l'azione a seconda del tasto scelto
 // Postcondition: true se il gioco prosegue, false per uscire
-// TODO: controllare utilizzo del negozio
 bool GUI::getAction(WINDOW* finestra){
+    Negozio shop;
     bool prosegui = true;
     int scelta = wgetch(finestra);
     switch (scelta){
@@ -163,13 +166,19 @@ bool GUI::getAction(WINDOW* finestra){
             mvright(finestra);
             break;
         case 101:
-            n.creaNegozio();
-            break;
-        case 120:
-            prosegui = false;
+            shop = Negozio(&p);
+            shop.creaNegozio();
+            mvwaddch(finestra, 20, 70, ' ');
+            wrefresh(finestra);
+            werase(finestra);
+            box(finestra, 0, 0);
+            stampaMappa(finestra);
             break;
         case 119:
             attacco(finestra);
+            break;
+        case 120:
+            prosegui = false;
             break;
     }
     return prosegui;
@@ -223,6 +232,11 @@ void GUI::mvright(WINDOW* finestra){
     }else if(ch1 == '#'){
         bool ultimo = game.attuale->succ == NULL;
         if (game.muoviAvanti()) {
+            if (ultimo) {
+                // 100 punti quando si supera il livello
+                p.aggiungiPunti(100);
+                p.riduciDurataPot();
+            }
             mvwaddch(finestra, 20, 70, ' ');
             wrefresh(finestra);
             werase(finestra);
@@ -244,120 +258,117 @@ void GUI::mvdown(WINDOW* finestra){
 
 //Metodo per definire gli spostamenti dei nemici
 void GUI::movimentiNemico(WINDOW* finestra){
-    game.attuale->l.appoggio = game.attuale->l.hnemici;
-    while(game.attuale->l.hnemici != NULL){
-        if(game.attuale->l.hnemici->nem.getSimbolo() == 'G'){
-            int ch1 = mvwinch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX()-1)& A_CHARTEXT;
-            int ch2 = mvwinch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX()+1)& A_CHARTEXT;
-            int ch3 = mvwinch(finestra, game.attuale->l.hnemici->nem.getY()+1, game.attuale->l.hnemici->nem.getX()+1)& A_CHARTEXT;
-            int ch4 = mvwinch(finestra, game.attuale->l.hnemici->nem.getY()+1, game.attuale->l.hnemici->nem.getX()-1)& A_CHARTEXT;
-            if(ch1==' ' && game.attuale->l.hnemici->nem.getSx()==true && ch4!=' '){
-                mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), ' ');
-                game.attuale->l.hnemici->nem.muoviSx();
-                mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), game.attuale->l.hnemici->nem.getSimbolo());
+    Livello::pnodo mv = game.attuale->l.hnemici;
+    while(mv != NULL){
+        if(mv->nem.getSimbolo() == 'G'){
+            int ch1 = mvwinch(finestra, mv->nem.getY(), mv->nem.getX()-1)& A_CHARTEXT;
+            int ch2 = mvwinch(finestra, mv->nem.getY(), mv->nem.getX()+1)& A_CHARTEXT;
+            int ch3 = mvwinch(finestra, mv->nem.getY()+1, mv->nem.getX()+1)& A_CHARTEXT;
+            int ch4 = mvwinch(finestra, mv->nem.getY()+1, mv->nem.getX()-1)& A_CHARTEXT;
+            if(ch1==' ' && mv->nem.getSx()==true && ch4!=' '){
+                mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
+                mv->nem.muoviSx();
+                mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
             }else{
-                game.attuale->l.hnemici->nem.setSx(false);
+                mv->nem.setSx(false);
                 if(ch1=='@' && hit==false){
-                    p.prendiDanno(game.attuale->l.hnemici->nem.getDanno());
+                    p.prendiDanno(mv->nem.getDanno());
                     hit=true;
                 }else if(ch2==' ' && ch3!=' '){
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), ' ');
-                    game.attuale->l.hnemici->nem.muoviDx();
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), game.attuale->l.hnemici->nem.getSimbolo());
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
+                    mv->nem.muoviDx();
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
                 }else{
-                    game.attuale->l.hnemici->nem.setSx(true);
+                    mv->nem.setSx(true);
                     if(ch2=='@' && hit==false){
-                        p.prendiDanno(game.attuale->l.hnemici->nem.getDanno());
+                        p.prendiDanno(mv->nem.getDanno());
                         hit=true;
                     }
                 }
             }
-        }else if(game.attuale->l.hnemici->nem.getSimbolo() == 'S'){
-            int ch1 = mvwinch(finestra,game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX()-1)& A_CHARTEXT;
-            int ch2 = mvwinch(finestra,game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX()+1)& A_CHARTEXT;
-            int ch3 = mvwinch(finestra,game.attuale->l.hnemici->nem.getY()+1, game.attuale->l.hnemici->nem.getX()+1)& A_CHARTEXT;
-            int ch4 = mvwinch(finestra,game.attuale->l.hnemici->nem.getY()+1, game.attuale->l.hnemici->nem.getX()-1)& A_CHARTEXT;
-            if(ch1==' ' && p.getX()<game.attuale->l.hnemici->nem.getX() && ch4!=' '){
-                mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), ' ');
-                game.attuale->l.hnemici->nem.muoviSx();
-                mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), game.attuale->l.hnemici->nem.getSimbolo());
+        }else if(mv->nem.getSimbolo() == 'S'){
+            int ch1 = mvwinch(finestra,mv->nem.getY(), mv->nem.getX()-1)& A_CHARTEXT;
+            int ch2 = mvwinch(finestra,mv->nem.getY(), mv->nem.getX()+1)& A_CHARTEXT;
+            int ch3 = mvwinch(finestra,mv->nem.getY()+1, mv->nem.getX()+1)& A_CHARTEXT;
+            int ch4 = mvwinch(finestra,mv->nem.getY()+1, mv->nem.getX()-1)& A_CHARTEXT;
+            if(ch1==' ' && p.getX()<mv->nem.getX() && ch4!=' '){
+                mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
+                mv->nem.muoviSx();
+                mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
             }else{
                 if(ch1=='@' && hit==false){
-                    p.prendiDanno(game.attuale->l.hnemici->nem.getDanno());
+                    p.prendiDanno(mv->nem.getDanno());
                     hit=true;
                 }else if(ch4==' '){
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), ' ');
-                    game.attuale->l.hnemici->nem.muoviSx();
-                    game.attuale->l.hnemici->nem.MuoviSuGiu(1);
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), game.attuale->l.hnemici->nem.getSimbolo());
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
+                    mv->nem.muoviSx();
+                    mv->nem.MuoviSuGiu(1);
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
                 }
-                if(ch2==' ' && p.getX()>game.attuale->l.hnemici->nem.getX() && ch3!=' '){
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), ' ');
-                    game.attuale->l.hnemici->nem.muoviDx();
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), game.attuale->l.hnemici->nem.getSimbolo());
+                if(ch2==' ' && p.getX()>mv->nem.getX() && ch3!=' '){
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
+                    mv->nem.muoviDx();
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
                 }else{
                     if(ch2=='@' && hit==false){
-                        p.prendiDanno(game.attuale->l.hnemici->nem.getDanno());
+                        p.prendiDanno(mv->nem.getDanno());
                         hit=true;
                     }
                     if(ch3==' '){
-                        mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), ' ');
-                        game.attuale->l.hnemici->nem.muoviDx();
-                        game.attuale->l.hnemici->nem.MuoviSuGiu(1);
-                        mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), game.attuale->l.hnemici->nem.getSimbolo());
+                        mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
+                        mv->nem.muoviDx();
+                        mv->nem.MuoviSuGiu(1);
+                        mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
                     }
                 }
             }
-        }else if(game.attuale->l.hnemici->nem.getSimbolo() == '{'){
-            int tmpx = game.attuale->l.hnemici->nem.getX()-1;
-            int tmpy = game.attuale->l.hnemici->nem.getY();
-            game.attuale->l.hnemici = game.attuale->l.hnemici->succ;
-            int ch1 = mvwinch(finestra,game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX()-1)& A_CHARTEXT;
+        }else if(mv->nem.getSimbolo() == '{'){
+            int tmpx = mv->nem.getX()-1;
+            int tmpy = mv->nem.getY();
+            mv = mv->succ;
+            int ch1 = mvwinch(finestra,mv->nem.getY(), mv->nem.getX()-1)& A_CHARTEXT;
             if(ch1==' '){
-                mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), ' ');
-                game.attuale->l.hnemici->nem.muoviSx();
-                mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), game.attuale->l.hnemici->nem.getSimbolo());
+                mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
+                mv->nem.muoviSx();
+                mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
             }else{
                 if(ch1=='@' && hit==false){
-                    p.prendiDanno(game.attuale->l.hnemici->nem.getDanno());
+                    p.prendiDanno(mv->nem.getDanno());
                     hit=true;
                 }else{
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), ' ');
-                    game.attuale->l.hnemici->nem.setX(tmpx);
-                    game.attuale->l.hnemici->nem.setY(tmpy);
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), game.attuale->l.hnemici->nem.getSimbolo());
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
+                    mv->nem.setX(tmpx);
+                    mv->nem.setY(tmpy);
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
                 }
             }
-        }else if(game.attuale->l.hnemici->nem.getSimbolo() == '+'){
-            // TODO: controllare su che lista lavora controllaCasella()
-            if(!game.attuale->l.hnemici->nem.getSx()){
-                int ch1 = mvwinch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX()+1)& A_CHARTEXT;
+        }else if(mv->nem.getSimbolo() == '+'){
+            if(mv->nem.getSx()){
+                int ch1 = mvwinch(finestra,mv->nem.getY(), mv->nem.getX()-1)& A_CHARTEXT;
                 if(ch1==' '){
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), ' ');
-                    game.attuale->l.hnemici->nem.muoviDx();
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), game.attuale->l.hnemici->nem.getSimbolo());
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
+                    mv->nem.muoviSx();
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
                 }else{
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), ' ');
-                    game.attuale->l.hnemici->nem.prendiDanno(1);
-                    controlloCasella(finestra, ch1, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX()+1);
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
+                    mv->nem.prendiDanno(1);
+                    controlloCasella(finestra, ch1, mv->nem.getY(), mv->nem.getX()-1);
                 }
             }else{
-                int ch1 = mvwinch(finestra,game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX()-1)& A_CHARTEXT;
+                int ch1 = mvwinch(finestra, mv->nem.getY(), mv->nem.getX()+1)& A_CHARTEXT;
                 if(ch1==' '){
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), ' ');
-                    game.attuale->l.hnemici->nem.muoviSx();
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), game.attuale->l.hnemici->nem.getSimbolo());
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
+                    mv->nem.muoviDx();
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
                 }else{
-                    mvwaddch(finestra, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX(), ' ');
-                    game.attuale->l.hnemici->nem.prendiDanno(1);
-                    controlloCasella(finestra, ch1, game.attuale->l.hnemici->nem.getY(), game.attuale->l.hnemici->nem.getX()-1);
+                    mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
+                    mv->nem.prendiDanno(1);
+                    controlloCasella(finestra, ch1, mv->nem.getY(), mv->nem.getX()+1);
                 }
             }
         }
-        game.attuale->l.hnemici = game.attuale->l.hnemici->succ;
+        mv = mv->succ;
     }
-    game.attuale->l.hnemici = game.attuale->l.appoggio;
-    // TODO: rimozione nemici (se non viene fatta da controllaCasella())
 }
 
 //Metodo che attacca i nemici
@@ -425,36 +436,35 @@ void GUI::attaccoPalla(WINDOW* finestra){
 
 //Metodo che fa l'attacco con l'arco
 void GUI::attaccoArco(WINDOW* finestra){
-    Freccia f = Freccia(p.getX(), p.getY(), '+', !p.isVersoDestra());
+    Freccia f = Freccia('+', p.getArma().getDanno(), p.getX(), p.getY(), !p.isVersoDestra());
     mvwaddch(finestra,f.getY(), f.getX(), f.getSimbolo());
-    game.attuale->l.inserisciNemicoCoda(f);
+    game.attuale->l.inserisciNemico(f);
 }
 
 //Metodo di controllo casella per l'attacco al nemico
 // Precondition: finestra, carattere nella casella, coordinate della casella
-// TODO: utilizzo di una lista tmp all'interno del livello attuale (?)
 void GUI::controlloCasella(WINDOW* finestra, int ch, int y, int x){
     bool colpito = false;
-    game.attuale->l.appoggio = game.attuale->l.hnemici;
+    Livello::pnodo mv = game.attuale->l.hnemici;
     if(ch=='G' || ch=='S' || ch=='{'){
-        while(game.attuale->l.hnemici!=NULL && !colpito) {
-            if(game.attuale->l.hnemici->nem.getX()==x && game.attuale->l.hnemici->nem.getY()==y){
-                if(!game.attuale->l.hnemici->nem.prendiDanno(p.infliggiDanno())){
+        while(mv!=NULL && !colpito) {
+            if(mv->nem.getX()==x && mv->nem.getY()==y){
+                if(!mv->nem.prendiDanno(p.infliggiDanno())){
                     // nemico morto
                     mvwaddch(finestra, y, x, ' ');
-                    p.guadagna(game.attuale->l.hnemici->nem.getRicompensa());
+                    p.guadagna(mv->nem.getRicompensa());
+                    p.aggiungiPunti(mv->nem.getRicompensa());
                     // se era uno scheletro elimina anche le frecce
-                    if(game.attuale->l.hnemici->nem.getSimbolo()=='{'){
-                        mvwaddch(finestra,game.attuale->l.hnemici->succ->nem.getY(), game.attuale->l.hnemici->succ->nem.getX(), ' ');
-                        game.attuale->l.hnemici->succ->nem.prendiDanno(1);
+                    if(mv->nem.getSimbolo()=='{'){
+                        mvwaddch(finestra,mv->succ->nem.getY(), mv->succ->nem.getX(), ' ');
+                        mv->succ->nem.prendiDanno(1);
                     }
                 }
                 colpito = true;
             }
-            game.attuale->l.hnemici = game.attuale->l.hnemici->succ;
+            mv = mv->succ;
         }
     }
-    game.attuale->l.hnemici = game.attuale->l.appoggio;
     game.attuale->l.rimuoviNemici();
 }
 
@@ -464,11 +474,15 @@ void GUI::esci(WINDOW* finestra, bool morto = true){
         werase(finestra);
         box(finestra, 0, 0);
         wrefresh(finestra);
-        p.resetPosizione(); 
         mvwprintw(finestra, 9 ,30, " -----------");
         mvwprintw(finestra, 10,30, "| GAME OVER |");
         mvwprintw(finestra, 11,30, " ----------- ");
-        mvwprintw(finestra, 15,20, "per uscire dal gioco premere 'x'");
+        if (p.getPunti() < 1000) {
+            mvwprintw(finestra, 13,32, "%d punti", p.getPunti());
+        } else {
+            mvwprintw(finestra, 13,31, "%d punti", p.getPunti());
+        }
+        mvwprintw(finestra, 15,20, "Per uscire dal gioco premere 'x'");
         int scelta;
         while(scelta!=120){
             scelta=wgetch(finestra);
@@ -482,6 +496,7 @@ void GUI::esci(WINDOW* finestra, bool morto = true){
 GUI::GUI() {
     if (p.getVita() <= 0) {
         this->game = Gioco(this->gf, true);
+        p.rigenera();
     } else {
         this->game = Gioco(this->gf, false);
     }
@@ -507,9 +522,10 @@ void GUI::gioco(WINDOW* finestra){
         mvwprintw(finestra, 2,2, "   ");
         mvwprintw(finestra, 2,2, "%d", p.getVita());
         mvwprintw(finestra, 2,5, "/100 <3");
-        // TODO: stampa di nome + punti del protagonista
-        mvwprintw(finestra, 2,65, "%d", p.getDenaro());
-        mvwprintw(finestra, 2,70, "$");
+        mvwprintw(finestra, 2,31 , "%s", p.getNome().s);
+        mvwprintw(finestra, 2,strlen(p.getNome().s) + 31, ": %d", p.getPunti());
+        mvwprintw(finestra, 2,63, "%d", p.getDenaro());
+        mvwprintw(finestra, 2,69, "$");
         //fermo la gravità quando salto per 6 frame in modo tale da farlo sembrare più reale
         if((isJump == true)&&(contSalto<6)){
             contSalto++;

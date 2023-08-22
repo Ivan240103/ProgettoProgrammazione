@@ -25,6 +25,4 @@ int main() {
   nodelay(finestra, TRUE);
 
   g.gioco(finestra);
-
-  endwin();  
 }
