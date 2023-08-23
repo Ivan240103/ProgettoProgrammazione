@@ -32,11 +32,6 @@ void GestoreFile::apriOutput(Stringa path, bool app) {
   }
 }
 
-// apre il file di output in append
-void GestoreFile::apriOutputApp(Stringa path) {
-  out.open(path.s, ios::app);
-}
-
 // chiude il file di input aperto
 void GestoreFile::chiudiInput() {
   in.close();
@@ -47,8 +42,7 @@ void GestoreFile::chiudiOutput() {
   out.close();
 }
 
-// legge una parola (sequenza di caratteri fino ad una virgola
-// o all fine del file)
+// legge una parola (sequenza di caratteri fino ad una virgola o fino alla fine del file)
 // Postcondition: parola letta
 Stringa GestoreFile::leggiParola() {
   Stringa lettura = Stringa((char*) "");
@@ -65,6 +59,7 @@ Stringa GestoreFile::leggiParola() {
 }
 
 // scrive una stringa sul file aperto
+// Precondition: il file deve essere aperto e chiuso dal chiamante
 void GestoreFile::scrivi(Stringa str) {
   out<<str.s;
 }

@@ -12,13 +12,19 @@ class Potenziamento {
   protected:
     // nome del potenziamento
     Stringa nome;
-    // costo per l'acquisto
+    // costo per l'acquisto al negozio
     int costo;
-    // numero di turni in cui permane l'effetto
+    // numero di livelli in cui agisce
     int durata;
 
   public:
-    Potenziamento(Stringa nome, int costo = 0, int durata = 0);
+    Potenziamento();
+
+    Potenziamento(
+      Stringa nome,
+      int costo = 0,
+      int durata = 0
+    );
 
     Stringa getNome();
 

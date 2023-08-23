@@ -1,6 +1,5 @@
 /*
  Classe padre per tutti i nemici del gioco
- Tutti i nemici causano danno se ci si entra in contatto
  Il danno causato è casuale tra un valore minimo e massimo
 */
 
@@ -21,14 +20,16 @@ class Nemico {
     int vita;
     // danno causabile
     int danno;
-    // denaro dato al protagonista dopo l'uccisione
+    // denaro e punti dati al protagonista dopo l'uccisione
     int ricompensa;
     // coordinate (x,y) della posizione a schermo
     int x, y;
-    // variabile per vedere se la destra o la sinistra è libera
+    // variabile per vedere se la sinistra è libera (true)
     bool sx;
 
   public:
+    Nemico();
+
     Nemico(
       Stringa nome,
       char simbolo = '?',
@@ -36,8 +37,8 @@ class Nemico {
       int minDanno = 1,
       int maxDanno = 1,
       int ricompensa = 20,
-      int x = 1 ,
-      int y = 1,
+      int x = 3,
+      int y = 3,
       bool sx = true
     );
 
@@ -61,11 +62,11 @@ class Nemico {
 
     void setY(int y);
 
-    void setSx(bool valore);
+    void setSx(bool sx);
 
     bool prendiDanno(int danno);
 
-    void MuoviSuGiu(int sposta);
+    void MuoviSuGiu(int spost);
 
     void muoviDx(int spost = 1);
 

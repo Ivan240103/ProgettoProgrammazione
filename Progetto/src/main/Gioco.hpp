@@ -1,5 +1,6 @@
 /*
- Classe per gestire la partita
+ Classe per gestire l'insieme dei livelli
+ Contiene la lista dinamica dei livelli (bidirezionale)
 */
 
 #ifndef GIOCO_HPP
@@ -7,9 +8,6 @@
 
 #include <cstdlib>
 #include "Livello.hpp"
-#include "../elementi/personaggi/Scheletro.cpp"
-#include "../elementi/personaggi/Goblin.cpp"
-#include "../elementi/personaggi/Guardia.cpp"
 
 class Gioco {
   
@@ -22,12 +20,14 @@ class Gioco {
   typedef liv* pliv;
 
   protected:
-    // testa della lista bidir dinamica dei livelli
+    // testa della lista dei livelli
     pliv hlivelli;
 
     bool cercaIdLivello(int id);
 
     void creaLivello();
+
+    void aggiungiLivello(Livello livello);
 
     void setAttuale();
 
@@ -43,17 +43,18 @@ class Gioco {
     
     Gioco();
 
-    Gioco(GestoreFile &gf, bool reset = true);
-
-    void aggiungiLivello(Livello livello);
+    Gioco(
+      GestoreFile &gf,
+      bool reset = true
+    );
 
     bool muoviAvanti();
 
     bool muoviIndietro();
 
-    void salva(GestoreFile &gf);
-
     void rimuoviNemici();
+
+    void salva(GestoreFile &gf);
 };
 
 #endif

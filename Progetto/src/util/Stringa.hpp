@@ -8,7 +8,7 @@
 #include <cstring>
 #include <cmath>
 
-const int MAX_LENGTH = 250;
+const int MAX_LENGTH = 100;
 
 class Stringa {
 

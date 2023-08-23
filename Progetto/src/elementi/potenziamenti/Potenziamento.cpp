@@ -1,5 +1,8 @@
 #include "Potenziamento.hpp"
 
+// costruttore default
+Potenziamento::Potenziamento() {}
+
 // costruttore
 Potenziamento::Potenziamento(Stringa nome, int costo, int durata) {
   this->nome = nome;
@@ -21,6 +24,8 @@ int Potenziamento::getDurata(){
   return durata;
 }
 
+// consuma il potenziamento
+// Postcondition: diminuisce la durata di 1
 void Potenziamento::riduciDurata() {
   if (durata > 0) {
     durata--;

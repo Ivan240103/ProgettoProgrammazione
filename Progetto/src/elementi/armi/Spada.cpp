@@ -1,13 +1,12 @@
 /*
  Arma Spada
- Colpisce le due caselle adiacenti orizzontalmente
+ Colpisce le due caselle verso cui è rivolto il protagonista orizzontalmente
 */
 
 #ifndef SPADA_CPP
 #define SPADA_CPP
 
 #include "Arma.hpp"
-#include "../../util/Stringa.hpp"
 
 class Spada : public Arma {
   

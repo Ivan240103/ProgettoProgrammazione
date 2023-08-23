@@ -1,5 +1,8 @@
 #include "Nemico.hpp"
 
+// costruttore default
+Nemico::Nemico() {}
+
 // costruttore
 Nemico::Nemico(Stringa nome, char simbolo, int vita, int minDanno, int maxDanno, int ricompensa, int x, int y, bool sx) {
   this->nome = nome;
@@ -54,8 +57,8 @@ void Nemico::setY(int y){
   this->y = y;
 }
 
-void Nemico::setSx(bool valore){
-  this->sx = valore;
+void Nemico::setSx(bool sx){
+  this->sx = sx;
 }
 
 // riduce la vita al nemico
@@ -70,8 +73,9 @@ bool Nemico::prendiDanno(int danno) {
   }
 }
 
-void Nemico::MuoviSuGiu(int sposta){
-  this->y += sposta;
+// Precondition: quantità y di cui spostarlo (neg: su, pos: giù)
+void Nemico::MuoviSuGiu(int spost){
+  y += spost;
 }
 
 // Precondition: quantità x di cui spostarlo

@@ -8,11 +8,6 @@
 #define NEGOZIO_HPP
 
 #include <ncurses.h>
-#include "../elementi/armi/Spada.cpp"
-#include "../elementi/armi/PallaChiodata.cpp"
-#include "../elementi/armi/Arco.cpp"
-#include "../elementi/potenziamenti/UltraDanno.cpp"
-#include "../elementi/potenziamenti/SuperScudo.cpp"
 #include "../elementi/personaggi/Protagonista.hpp"
 
 class Negozio {
@@ -20,6 +15,7 @@ class Negozio {
   protected:
     // puntatore al protagonista
     Protagonista* pr;
+    // inventario del negozio
     Spada s = Spada();
     PallaChiodata p = PallaChiodata();
     Arco a = Arco();

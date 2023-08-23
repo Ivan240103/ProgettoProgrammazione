@@ -2,7 +2,9 @@
 
 //Metodo che stampa le info del protagonista
 void Negozio::stampaInfo(WINDOW* finestra) {
+  // cancella le precedenti
   mvwprintw(finestra, 20,45,"                         ");
+  // scrive le nuove
   mvwprintw(finestra, 20,45,"VITA: ");
   mvwprintw(finestra, 20,51,"%d  ", pr->getVita());
   mvwprintw(finestra, 20,56,"DENARO: ");
@@ -127,6 +129,7 @@ void Negozio::stampaVita(int standout, WINDOW* finestra){
 }
 
 //Metodo che stampa le caratteristiche degli articoli del negozio
+// Precondition: articolo di cui stampare le caratteristiche
 void Negozio::caratteristiche(int articolo, WINDOW* finestra){
   switch (articolo){
     case 0: 
@@ -233,6 +236,7 @@ void Negozio::caratteristiche(int articolo, WINDOW* finestra){
 bool Negozio::armiNegozio(WINDOW* finestra, int &scelta){
   int contatore=0;
 
+  scelta=0;
   stampaArmi(contatore, finestra);
   caratteristiche(contatore, finestra);
 
@@ -293,9 +297,9 @@ bool Negozio::armiNegozio(WINDOW* finestra, int &scelta){
 //Metodo che gestisce il menu dei potenziamenti
 // Postcondition: true se bisogna cambiare categoria, false altrimenti
 bool Negozio::potenziamentiNegozio(WINDOW* finestra, int &scelta){
-  int contatore = 3;
+  int contatore=3;
   
-  scelta = 0;
+  scelta=0;
   stampaPotenziamenti(contatore, finestra);
   caratteristiche(contatore, finestra);
 
@@ -364,6 +368,7 @@ bool Negozio::potenziamentiNegozio(WINDOW* finestra, int &scelta){
 bool Negozio::vitaNegozio(WINDOW* finestra, int &scelta){
   int contatore=7;
 
+  scelta=0;
   stampaVita(contatore, finestra);
   caratteristiche(contatore, finestra);
 

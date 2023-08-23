@@ -98,23 +98,19 @@ void Protagonista::aumentaVita(int vita){
 }
 
 // riduce la vita al protagonista
-// Postcondition: true se è ancora vivo, false se è morto
-bool Protagonista::prendiDanno(int danno) {
-  if (potenziamento.getNome().compareTo(Stringa((char*) "SuperScudo")) == 0 && potenziamento.getDurata() > 0) {
-    return true;
-  } else {
+void Protagonista::prendiDanno(int danno) {
+  // se ha il potenziamento non prende danno
+  if (!(potenziamento.getNome().compareTo(Stringa((char*) "SuperScudo")) == 0 && potenziamento.getDurata() > 0)) {
     vita -= danno;
-    if (vita <= 0) {
+    if (vita < 0) {
       vita = 0;
-      return false;
-    } else {
-      return true;
     }
   }
 }
 
 // Postcondition: danno causabile dal protagonista
 int Protagonista::infliggiDanno() {
+  // se ha il potenziamento deve uccidere in un colpo
   if (potenziamento.getNome().compareTo(Stringa((char*) "UltraDanno")) == 0 && potenziamento.getDurata() > 0) {
     return 1000;
   } else {
@@ -128,7 +124,7 @@ void Protagonista::guadagna(int soldi) {
 }
 
 // decrementa il denaro
-// Postcondition: false se il denaro non è sufficiente, true se tutto apposto
+// Postcondition: false se il denaro non è sufficiente, true se è abbastanza
 bool Protagonista::spendi(int soldi) {
   bool tr = false;
   if (soldi <= denaro) {
@@ -143,7 +139,7 @@ void Protagonista::cambiaArma(Arma a) {
   arma = a;
 }
 
-// sostituisce il potenziamento attivo
+// sostituisce il potenziamento equipaggiato
 void Protagonista::cambiaPotenziamento(Potenziamento p) {
   potenziamento = p;
 }
@@ -197,7 +193,7 @@ void Protagonista::rigenera() {
   resetPosizione();
 }
 
-// salva il protagonista su file
+// salva il protagonista sul suo file
 void Protagonista::salva(GestoreFile &gf) {
   Stringa ts = nome;
   ts.concat(',');

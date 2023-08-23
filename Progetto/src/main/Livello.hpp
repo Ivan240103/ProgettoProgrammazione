@@ -1,5 +1,6 @@
 /*
- Classe per gestire il singolo livello del gioco
+ Classe per gestire un singolo livello del gioco
+ Contiene la lista dinamica dei nemici presenti
 */
 
 #ifndef LIVELLO_HPP
@@ -19,18 +20,22 @@ class Livello {
   protected:
     // identificativo del livello
     int id;
-    // true se c'è il protagonista nel livello
+    // true se c'è il protagonista nel livello, false altrimenti
     bool attuale;
 
     void rimuoviTesta();
 
   public:
+    // puntatore ad un nodo contenente un livello
     typedef nodo* pnodo;
 
-    // testa della lista dinamica dei nemici
+    // testa della lista dei nemici
     pnodo hnemici;
 
-    Livello(int id = 1, bool attuale = false);
+    Livello(
+      int id = 1,
+      bool attuale = false
+    );
 
     int getId();
 
