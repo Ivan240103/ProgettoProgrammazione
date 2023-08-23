@@ -1,6 +1,6 @@
 # ProgettoProgrammazione
 Progetto di programmazione - Unibo  
-Ivan De Simone, Nicolò Tambini, Tommaso Merighi
+Ivan De Simone, Nicolò Tambini, Tommaso Merighi  
 Gioco di stampo platform game in grafica ASCII controllato da terminale.  
 Il protagonista ha lo scopo di uccidere i nemici per guadagnare punti ed avanzare di livello, game over quando la vita del protagonista arriva a zero. Sono presenti diversi tipi di nemici che si muovono, sparano... C'è una valuta che si guadagna uccidendo i nemici e serve per acquistare armi, potenziamenti e/o vita dal negozio sempre accessibile.
 
@@ -15,7 +15,7 @@ Il protagonista ha lo scopo di uccidere i nemici per guadagnare punti ed avanzar
 ## DEBUG
 Comando per eseguire il main (da eseguire nella cartella "Progetto/src/main"):
 
-g++ -c Gioco.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp Negozio.cpp Livello.cpp ../elementi/armi/Arma.cpp ../elementi/potenziamenti/Potenziamento.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp GUI.cpp -c Main.cpp && g++ Arma.o Potenziamento.o GestoreFile.o Gioco.o GUI.o Livello.o Negozio.o Nemico.o Protagonista.o Stringa.o Main.o -o Main -lncurses && ./Main && rm *.o
+g++ -c Gioco.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp Negozio.cpp Livello.cpp ../elementi/armi/Arma.cpp ../elementi/potenziamenti/Potenziamento.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp GUI.cpp -c Main.cpp && g++ Arma.o Potenziamento.o GestoreFile.o Gioco.o GUI.o Livello.o Negozio.o Nemico.o Protagonista.o Stringa.o Main.o -o Main -lncurses && rm *.o && ./Main
 
 ## Documentazione
 
