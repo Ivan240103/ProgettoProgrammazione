@@ -1,1 +1,1 @@
-Gigio,12,845,PallaChiodata,UltraDanno,0,2035,19,18,0
+Gigio,100,0,Bastone,tmp,0,0,3,3,1

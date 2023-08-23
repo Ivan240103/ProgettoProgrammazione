@@ -95,7 +95,7 @@ void GUI::creaMappa(int det, int mv, WINDOW* win, bool nuovo){
     }
 }
 
-//Metodo che stampa la mappa relativa al livello
+//Metodo che stampa la mappa relativa al livello attuale
 // Precondition: nuovo = true se bisogna creare i nemici (livello nuovo)
 void GUI::stampaMappa(WINDOW* win, bool nuovo){
     //TODO: controllare gestione forza dei nemici
@@ -110,12 +110,12 @@ void GUI::stampaMappa(WINDOW* win, bool nuovo){
     stampaNemici(win);
 }
 
-//Stampa il protagonista in una determinata posizione e in una determinata finestra
+//Stampa il protagonista in una determinata posizione
 void GUI::stampaProtagonista(WINDOW *finestra, int y, int x){
     mvwaddch(finestra, y, x, p.getSimbolo());
 }
 
-//Metodo che crea i nemici e li aggiunge al livello
+//Metodo che crea i nemici e li aggiunge al livello attuale
 void GUI::creaNemico(WINDOW* win, int y, int x, int random){
     Goblin gob;
     Scheletro schel;
@@ -141,7 +141,7 @@ void GUI::creaNemico(WINDOW* win, int y, int x, int random){
 
 // stampa tutti i nemici del livello
 void GUI::stampaNemici(WINDOW* finestra) {
-    Nemico nem = Nemico(Stringa((char*) "tmp"));
+    Nemico nem = Nemico();
     Livello::pnodo mv = game.attuale->l.hnemici;
     while (mv != NULL) {
         mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
@@ -261,6 +261,7 @@ void GUI::movimentiNemico(WINDOW* finestra){
     Livello::pnodo mv = game.attuale->l.hnemici;
     while(mv != NULL){
         if(mv->nem.getSimbolo() == 'G'){
+            // nemico guardia
             int ch1 = mvwinch(finestra, mv->nem.getY(), mv->nem.getX()-1)& A_CHARTEXT;
             int ch2 = mvwinch(finestra, mv->nem.getY(), mv->nem.getX()+1)& A_CHARTEXT;
             int ch3 = mvwinch(finestra, mv->nem.getY()+1, mv->nem.getX()+1)& A_CHARTEXT;
@@ -287,6 +288,7 @@ void GUI::movimentiNemico(WINDOW* finestra){
                 }
             }
         }else if(mv->nem.getSimbolo() == 'S'){
+            // nemico goblin
             int ch1 = mvwinch(finestra,mv->nem.getY(), mv->nem.getX()-1)& A_CHARTEXT;
             int ch2 = mvwinch(finestra,mv->nem.getY(), mv->nem.getX()+1)& A_CHARTEXT;
             int ch3 = mvwinch(finestra,mv->nem.getY()+1, mv->nem.getX()+1)& A_CHARTEXT;
@@ -323,6 +325,7 @@ void GUI::movimentiNemico(WINDOW* finestra){
                 }
             }
         }else if(mv->nem.getSimbolo() == '{'){
+            // nemico scheletro
             int tmpx = mv->nem.getX()-1;
             int tmpy = mv->nem.getY();
             mv = mv->succ;
@@ -343,6 +346,7 @@ void GUI::movimentiNemico(WINDOW* finestra){
                 }
             }
         }else if(mv->nem.getSimbolo() == '+'){
+            // freccia del protagonista
             if(mv->nem.getSx()){
                 int ch1 = mvwinch(finestra,mv->nem.getY(), mv->nem.getX()-1)& A_CHARTEXT;
                 if(ch1==' '){
@@ -469,7 +473,9 @@ void GUI::controlloCasella(WINDOW* finestra, int ch, int y, int x){
 }
 
 //Metodo per uscire dal gioco
-void GUI::esci(WINDOW* finestra, bool morto = true){
+// Precondition: morto = true se si esce perchè la vita è a zero,
+// false se esce volontariamente l'utente
+void GUI::esci(WINDOW* finestra, bool morto){
     if (morto) {
         werase(finestra);
         box(finestra, 0, 0);
@@ -483,7 +489,7 @@ void GUI::esci(WINDOW* finestra, bool morto = true){
             mvwprintw(finestra, 13,31, "%d punti", p.getPunti());
         }
         mvwprintw(finestra, 15,20, "Per uscire dal gioco premere 'x'");
-        int scelta;
+        int scelta=0;
         while(scelta!=120){
             scelta=wgetch(finestra);
         }
@@ -493,6 +499,7 @@ void GUI::esci(WINDOW* finestra, bool morto = true){
     endwin();
 }
 
+// costruttore
 GUI::GUI() {
     if (p.getVita() <= 0) {
         this->game = Gioco(this->gf, true);
@@ -518,7 +525,7 @@ void GUI::gioco(WINDOW* finestra){
     nodelay(finestra, TRUE);
     stampaMappa(finestra);
     do{
-        //stampo i valori vita e denaro in modo tale che ogni volta si modifichino con i soldi ottenuti o la vita tolta
+        //stampo i valori vita, denaro e punti in modo tale che ogni volta si aggiornino
         mvwprintw(finestra, 2,2, "   ");
         mvwprintw(finestra, 2,2, "%d", p.getVita());
         mvwprintw(finestra, 2,5, "/100 <3");
@@ -562,5 +569,6 @@ void GUI::gioco(WINDOW* finestra){
         gravita++;
 
     }while(p.getVita()>0 && prosegui);
+    
     esci(finestra, p.getVita()<=0);
 }

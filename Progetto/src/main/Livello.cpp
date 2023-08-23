@@ -69,7 +69,7 @@ void Livello::rimuoviNemici() {
   }
 }
 
-// Postcondition: true se sono stati uccisi tutti i nemici
+// Postcondition: true se sono stati uccisi tutti i nemici, false altrimenti
 bool Livello::isTerminato() {
   rimuoviNemici();
   return hnemici == NULL;

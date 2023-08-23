@@ -25,7 +25,7 @@ void Stringa::intToCharArray(int n, char c[]) {
   c[i] = '\0';
 }
 
-// costruttore vuoto
+// costruttore default
 Stringa::Stringa() {
   strncpy(this->s, (char*) "", MAX_LENGTH);
 }
@@ -48,7 +48,7 @@ void Stringa::concat(char c) {
 
 // concatena un intero al valore salvato
 void Stringa::concat(int n) {
-  char strN[16] = "";
+  char strN[10] = "";
   intToCharArray(n, strN);
   strncat(s, strN, MAX_LENGTH - 1);
 }
@@ -60,7 +60,7 @@ int Stringa::compareTo(Stringa cmp) {
 
 // Postcondition: valore intero della stringa
 int Stringa::toInt() {
-  // si assume che una singola cifra ci sia sempre (0)
+  // si assume che una singola cifra ci sia sempre (anche solo 0)
   int m = -1, n = 0;
   for (int i = 0; s[i] != '\0'; i++) {
     m++;

@@ -7,7 +7,6 @@
 #define PALLACHIODATA_CPP
 
 #include "Arma.hpp"
-#include "../../util/Stringa.hpp"
 
 class PallaChiodata : public Arma {
 

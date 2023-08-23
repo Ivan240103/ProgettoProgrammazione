@@ -16,6 +16,7 @@ bool Gioco::cercaIdLivello(int id) {
 }
 
 // aggiunge un nuovo livello creato da zero come ultimo
+// nemici vengono aggiunti da un altro metodo
 void Gioco::creaLivello() {
   pliv nuovo = new liv;
   int id;
@@ -66,7 +67,6 @@ void Gioco::eliminaSalvataggi(GestoreFile &gf) {
 
 // resetta lo stato della parita
 void Gioco::resetta(GestoreFile &gf) {
-  // elimina il salvataggio della partita precedente
   eliminaSalvataggi(gf);
   // creazione primo livello
   Livello primo = Livello(0, true);
@@ -113,8 +113,10 @@ void Gioco::caricaSalvataggi(GestoreFile &gf) {
   gf.chiudiInput();
 }
 
+// costruttore default
 Gioco::Gioco() {}
 
+// costruttore
 // Precondition: reset true se bisogna ricominciare la partita dal primo livello
 // false se si carica quella precedente da file
 Gioco::Gioco(GestoreFile &gf, bool reset) {
@@ -143,7 +145,7 @@ bool Gioco::muoviAvanti() {
   return mosso;
 }
 
-// sposta il protagonista nel livello precedente
+// sposta il protagonista nel livello precedente se possibile
 // Postcondition: true se si è mosso, false altrimenti
 bool Gioco::muoviIndietro() {
   bool mosso = false;
@@ -154,6 +156,11 @@ bool Gioco::muoviIndietro() {
     mosso = true;
   }
   return mosso;
+}
+
+// rimuove i nemici con zero di vita dal livello attuale
+void Gioco::rimuoviNemici() {
+  attuale->l.rimuoviNemici();
 }
 
 // salva la partita su file
@@ -167,9 +174,4 @@ void Gioco::salva(GestoreFile &gf) {
   }
   gf.scrivi(Stringa((char*) "#"));
   gf.chiudiOutput();
-}
-
-// rimuove i nemici con zero di vita dal livello attuale
-void Gioco::rimuoviNemici() {
-  attuale->l.rimuoviNemici();
 }

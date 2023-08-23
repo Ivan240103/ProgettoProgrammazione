@@ -27,8 +27,8 @@ class Protagonista {
     int denaro;
     // arma equipaggiata
     Arma arma = Arma();
-    // durata residua del potenziamento
-    Potenziamento potenziamento = Potenziamento(Stringa((char*) "tmp"));
+    // potenziamento equipaggiato
+    Potenziamento potenziamento = Potenziamento();
     // punti ottenuti
     int punti;
     // coordinate (x, y) della posizione a schermo
@@ -69,7 +69,7 @@ class Protagonista {
 
     void aumentaVita(int vita);
 
-    bool prendiDanno(int danno);
+    void prendiDanno(int danno);
 
     int infliggiDanno();
 

@@ -1,5 +1,6 @@
 /*
-Classe per gestire la grafica del gioco
+ Classe per gestire la grafica del gioco e tutto ciò che riguarda
+ stampe a video, attacchi e spostamenti
 */
 
 #ifndef GUI_HPP
@@ -8,18 +9,14 @@ Classe per gestire la grafica del gioco
 #include <ncurses.h>
 #include <unistd.h>
 #include <cstdlib>
-#include <ctime>
 #include <cstring>
 #include "Gioco.hpp"
-#include "Livello.hpp"
 #include "Negozio.hpp"
 #include "../elementi/personaggi/Protagonista.hpp"
-#include "../elementi/personaggi/Nemico.hpp"
 #include "../elementi/personaggi/Goblin.cpp"
 #include "../elementi/personaggi/Scheletro.cpp"
 #include "../elementi/personaggi/Freccia.cpp"
 #include "../elementi/personaggi/Guardia.cpp"
-#include "../util/GestoreFile.hpp"
 
 class GUI{
 
@@ -69,10 +66,9 @@ class GUI{
 
         void controlloCasella(WINDOW* finestra, int ch, int y, int x);
         
-        void esci(WINDOW* finestra, bool morto);
+        void esci(WINDOW* finestra, bool morto = true);
     
     public:
-
         GUI();
         
         WINDOW* creaFinestra();

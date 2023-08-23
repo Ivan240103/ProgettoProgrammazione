@@ -7,7 +7,6 @@
 #define ARCO_CPP
 
 #include "Arma.hpp"
-#include "../../util/Stringa.hpp"
 
 class Arco : public Arma {
 

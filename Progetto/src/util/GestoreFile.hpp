@@ -5,7 +5,6 @@
 #ifndef GESTOREFILE_HPP
 #define GESTOREFILE_HPP
 
-#include <iostream>
 #include <fstream>
 using namespace std;
 #include "Stringa.hpp"
@@ -30,8 +29,6 @@ class GestoreFile {
     void apriInput(Stringa path);
 
     void apriOutput(Stringa path, bool app = false);
-
-    void apriOutputApp(Stringa path);
 
     void chiudiInput();
 

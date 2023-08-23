@@ -1,13 +1,12 @@
 /*
  Classe SuperScudo
- Quando attivo, il protagonista non subisce danno
+ Permette al protagonista di non subire danno
 */
 
 #ifndef SUPERSCUDO_CPP
 #define SUPERSCUDO_CPP
 
 #include "Potenziamento.hpp"
-#include "../../util/Stringa.hpp"
 
 class SuperScudo : public Potenziamento {
   

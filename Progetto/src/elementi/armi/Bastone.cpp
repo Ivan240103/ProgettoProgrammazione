@@ -7,7 +7,6 @@
 #define BASTONE_CPP
 
 #include "Arma.hpp"
-#include "../../util/Stringa.hpp"
 
 class Bastone : public Arma {
 

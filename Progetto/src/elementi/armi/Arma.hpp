@@ -10,6 +10,7 @@
 class Arma {
   
   protected:
+    // nome dell'arma
     Stringa nome;
     // danno causabile
     int danno;
