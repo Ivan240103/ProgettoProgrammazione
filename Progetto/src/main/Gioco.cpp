@@ -163,6 +163,17 @@ void Gioco::rimuoviNemici() {
   attuale->l.rimuoviNemici();
 }
 
+// Postcondition: numero dei livelli affrontati
+int Gioco::numeroLivelli() {
+  int n = 0;
+  pliv mv = hlivelli;
+  while (mv != NULL) {
+    n++;
+    mv = mv->succ;
+  }
+  return n;
+}
+
 // salva la partita su file
 void Gioco::salva(GestoreFile &gf) {
   eliminaSalvataggi(gf);

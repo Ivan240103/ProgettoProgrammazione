@@ -1,5 +1,7 @@
 /*
  Classe main da cui viene avviato il gioco
+
+ Autori: Ivan De Simone, Nicolò Tambini, Tommaso Merighi
 */
 
 #include <ncurses.h>

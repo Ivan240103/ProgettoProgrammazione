@@ -73,6 +73,11 @@ bool Nemico::prendiDanno(int danno) {
   }
 }
 
+// aumenta il danno causabile dal nemico
+void Nemico::aumentaDanno(int incr) {
+  danno += incr;
+}
+
 // Precondition: quantità y di cui spostarlo (neg: su, pos: giù)
 void Nemico::MuoviSuGiu(int spost){
   y += spost;

@@ -54,6 +54,8 @@ class Gioco {
 
     void rimuoviNemici();
 
+    int numeroLivelli();
+
     void salva(GestoreFile &gf);
 };
 
