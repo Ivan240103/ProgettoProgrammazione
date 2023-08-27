@@ -98,7 +98,6 @@ void GUI::creaMappa(int det, int mv, WINDOW* win, bool nuovo){
 //Metodo che stampa la mappa relativa al livello attuale
 // Precondition: nuovo = true se bisogna creare i nemici (livello nuovo)
 void GUI::stampaMappa(WINDOW* win, bool nuovo){
-    //TODO: controllare gestione forza dei nemici
     int id = game.attuale->l.getId();
     creaMappa(0,1, win, nuovo);
     creaMappa((id*7)%8 + 1 ,11, win, nuovo);
@@ -124,16 +123,19 @@ void GUI::creaNemico(WINDOW* win, int y, int x, int random){
     switch(random){
         case 0:
             gob = Goblin(x,y);
+            gob.aumentaDanno(game.numeroLivelli() / 5);
             game.attuale->l.inserisciNemico(gob);
             break;
         case 1:
             schel = Scheletro(x,y);
+            schel.aumentaDanno(game.numeroLivelli() / 5);
             game.attuale->l.inserisciNemico(schel);
             f = Freccia('-', schel.getDanno(), x-1, y);
             game.attuale->l.inserisciNemico(f);
             break;
         case 2:
             gua = Guardia(x,y);
+            gua.aumentaDanno(game.numeroLivelli() / 5);
             game.attuale->l.inserisciNemico(gua);
             break;
     }
@@ -355,8 +357,8 @@ void GUI::movimentiNemico(WINDOW* finestra){
                     mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
                 }else{
                     mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
-                    mv->nem.prendiDanno(1);
                     controlloCasella(finestra, ch1, mv->nem.getY(), mv->nem.getX()-1);
+                    mv->nem.prendiDanno(1);
                 }
             }else{
                 int ch1 = mvwinch(finestra, mv->nem.getY(), mv->nem.getX()+1)& A_CHARTEXT;
@@ -366,12 +368,13 @@ void GUI::movimentiNemico(WINDOW* finestra){
                     mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), mv->nem.getSimbolo());
                 }else{
                     mvwaddch(finestra, mv->nem.getY(), mv->nem.getX(), ' ');
-                    mv->nem.prendiDanno(1);
                     controlloCasella(finestra, ch1, mv->nem.getY(), mv->nem.getX()+1);
+                    mv->nem.prendiDanno(1);
                 }
             }
         }
         mv = mv->succ;
+        game.attuale->l.rimuoviNemici();
     }
 }
 

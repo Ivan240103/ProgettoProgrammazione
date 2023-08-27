@@ -66,6 +66,8 @@ class Nemico {
 
     bool prendiDanno(int danno);
 
+    void aumentaDanno(int incr);
+
     void MuoviSuGiu(int spost);
 
     void muoviDx(int spost = 1);
