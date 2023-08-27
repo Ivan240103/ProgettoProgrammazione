@@ -23,11 +23,11 @@ class GUI{
     protected:
         // altezza e larghezza della finestra di gioco
         int altezza = 22, larghezza = 72;
-        // TODO: a cosa servono hit e isJump ??? //hit serve per regolare l'invincibilità del personaggio, se è false, allora si può colpire, 
-        //se è true non è possibile fargli danno //isJump, invece, regola il salto, infatti finchè isJump è true, la gravità non ha effetto sul protagonista,
-        //quando isJump è false, la gravità inizia a fare effetto e il protagonista inizia a scendere verso il basso
+        //hit serve per regolare l'invincibilità del protagonista, se è false allora si può colpire, se è true non è possibile fargli danno
+        //isJump regola il salto, finchè isJump è true la gravità non ha effetto sul protagonista,
+        //quando isJump è false la gravità inizia a fare effetto e il protagonista inizia a scendere verso il basso
         bool hit = false, isJump = false;
-        // TODO: a cosa serve contSalto ??? //contSalto è un contatore che regola il numero di frame per i quali il giocatore deve stare in aria,
+        //contSalto è un contatore che regola il numero di frame per i quali il giocatore deve stare in aria,
         //una volta arrivato a 6, il giocatore può iniziare a scendere, tramite l'utilizzo di isJump, quindi contSalto e isJump vanno insieme
         int contSalto = 0;
 
