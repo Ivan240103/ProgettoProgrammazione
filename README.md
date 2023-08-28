@@ -6,11 +6,11 @@ Ajeje’s adventures è un gioco platform in grafica ASCII realizzato in C++ sfr
 ## ESECUZIONE
 **Comando per compilare ed eseguire il main** (da eseguire nella cartella "Progetto/src/main"):
 
-g++ -c Main.cpp GUI.cpp Gioco.cpp Livello.cpp Negozio.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp ../elementi/armi/Arma.cpp ../elementi/potenziamenti/Potenziamento.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp && g++ Main.o GUI.o Gioco.o Livello.o Negozio.o Protagonista.o Nemico.o Arma.o Potenziamento.o Stringa.o GestoreFile.o -o Ajeje -lncurses && rm *.o && ./Ajeje
+g++ -c Main.cpp GUI.cpp Gioco.cpp Livello.cpp Negozio.cpp ../elementi/personaggi/Protagonista.cpp ../elementi/personaggi/Nemico.cpp ../elementi/armi/Arma.cpp ../elementi/potenziamenti/Potenziamento.cpp ../util/*.cpp && g++ *.o -o Ajeje -lncurses && rm *.o && ./Ajeje
 
 **Comando per resettare il database in caso di errori** (da eseguire nella cartella "Progetto/src/main"):
 
-g++ -c Reset.cpp Gioco.cpp Livello.cpp ../elementi/personaggi/Nemico.cpp ../util/Stringa.cpp ../util/GestoreFile.cpp && g++ Reset.o Gioco.o Livello.o Nemico.o Stringa.o GestoreFile.o -o Reset && rm *.o && ./Reset
+g++ -c Reset.cpp Gioco.cpp Livello.cpp ../elementi/personaggi/Nemico.cpp ../util/*.cpp && g++ *.o -o Reset && rm *.o && ./Reset
 
 ## COMANDI
 - a: spostamento a sinistra
